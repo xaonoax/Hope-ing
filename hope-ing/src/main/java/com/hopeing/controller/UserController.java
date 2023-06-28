@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user/*")
+@RequestMapping("/hope-ing/user/*")
 @Slf4j
 public class UserController {
 	
@@ -26,7 +26,7 @@ public class UserController {
 	}
 	
 	// 회원가입 실행
-	@PostMapping("signUp")
+	@PostMapping("join")
 	public String signUp(UserVO user) {
 		userService.joinUser(user);
 		

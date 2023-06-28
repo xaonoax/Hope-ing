@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Hope-ing</title>
+</head>
+<body>
+<div class="wrap">
+	<form method="post" action="/user/join" id="joinForm">
+		<div class="user_id" style="text-align: center;">
+			<div class="user_id_input_box">
+				<input class="user_id_input" name="user_id" placeholder="아이디">
+			</div>
+		</div>
+		<br>
+		<div class="user_pw" style="text-align: center;">
+			<div class="user_pw_input_box">
+				<input class="user_pw_input" name="user_pw" placeholder="비밀번호">
+			</div>
+		</div>
+		<br>
+		<div class="user_name" style="text-align: center;">
+			<div class="user_name_input_box">
+				<input class="user_name_input" name="user_name" placeholder="이름">
+			</div>
+		</div>
+		<br>
+		<div class="user_nickname" style="text-align: center;">
+			<div class="user_nickname_input_box">
+				<input class="user_nickname_input" name="user_nickname" placeholder="닉네임">
+			</div>
+		</div>
+		<br>
+		<div class="user_email" style="text-align: center;">
+			<div class="user_email_input_box">
+				<input class="user_email_input" type="email" name="user_email" placeholder="이메일">
+			</div>
+		</div>
+		<br>
+		<div class="user_phone_num" style="text-align: center;">
+			<div class="user_phone_num_input_box">
+				<input class="user_phone_num_input" name="user_phone_num" placeholder="전화번호">
+			</div>
+		</div>
+		<br>
+		<div class="signUp_button" style="text-align: center;">
+			<button id="signUp_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">가입하기</button>
+		</div>
+	</form>
+</div>
+</body>
+</html>
