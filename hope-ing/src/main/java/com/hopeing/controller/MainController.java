@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/hope-ing")
 @Slf4j
 public class MainController {
 	
 	@GetMapping("")
-	public String home() {
+	public String Main() {
 				
-		return "";
+		return "hope-ing";
 	}
 	
 }
