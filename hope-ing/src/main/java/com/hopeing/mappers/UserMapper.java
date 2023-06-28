@@ -7,5 +7,5 @@ import com.hopeing.beans.vo.UserVO;
 @Mapper
 public interface UserMapper {
 	// 회원가입
-	public void signUpUser(UserVO user);
+	public void joinUser(UserVO user);
 }

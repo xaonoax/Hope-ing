@@ -4,5 +4,5 @@ import com.hopeing.beans.vo.UserVO;
 
 public interface UserService {
 	// 회원가입
-	public void signUpUser(UserVO user);
+	public void joinUser(UserVO user);
 }

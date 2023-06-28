@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserService{
 	
 	// 회원가입
 	@Override
-	public void signUpUser(UserVO user){
-		userMapper.signUpUser(user);
+	public void joinUser(UserVO user){
+		userMapper.joinUser(user);
 	}
 }

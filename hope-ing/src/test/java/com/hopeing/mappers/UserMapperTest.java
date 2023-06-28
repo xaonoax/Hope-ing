@@ -19,7 +19,7 @@ public class UserMapperTest {
 	
 	// 회원가입 쿼리 테스트 메서드
 	@Test
-	public void singUpUserTest() {
+	public void joinTest() {
 		UserVO user = new UserVO();
 		
 		user.setUser_id("test1");
@@ -29,6 +29,6 @@ public class UserMapperTest {
 		user.setUser_email("test5");
 		user.setUser_phone_num("test6");
 		
-		userMapper.signUpUser(user);
+		userMapper.joinUser(user);
 	}
 }
