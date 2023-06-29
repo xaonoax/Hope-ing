@@ -6,7 +6,10 @@
 </head>
 <body>
 <div class="wrap">
-	<form method="post" action="/user/join" id="joinForm">
+	<form method="post" id="joinForm">
+		<div th:if="${errorMessage}" style="text-align: center; color: red;">
+			<p th:text="${errorMessage}"></p>
+		</div>
 		<div class="user_id" style="text-align: center;">
 			<div class="user_id_input_box">
 				<input class="user_id_input" name="user_id" placeholder="아이디">
@@ -15,7 +18,7 @@
 		<br>
 		<div class="user_pw" style="text-align: center;">
 			<div class="user_pw_input_box">
-				<input class="user_pw_input" name="user_pw" placeholder="비밀번호">
+				<input class="user_pw_input" name="user_pw" placeholder="비밀번호" required>
 			</div>
 		</div>
 		<br>

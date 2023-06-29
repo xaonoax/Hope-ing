@@ -1,6 +1,7 @@
 package com.hopeing.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,20 @@ public class UserController {
 	
 	// 회원가입 페이지 이동
 	@GetMapping("join")
-	public void join() {
-		
+	public void joinUserGET(Model model) {
+		model.addAttribute("errorMessage", "");
 	}
 	
 	// 회원가입 실행
 	@PostMapping("join")
-	public String signUp(UserVO user) {
-		userService.joinUser(user);
-		
-		return "redirect:/hope-ing";
+	public String joinUserPOST(UserVO user, Model model) {
+		try {
+			userService.joinUser(user);
+			return "redirect:/hope-ing/user/login";
+		}
+		catch (IllegalArgumentException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "join";
+		}
 	}
 }

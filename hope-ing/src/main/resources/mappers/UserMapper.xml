@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hopeing.mappers.UserMapper">
+	<!-- 회원가입(아이디 중복 체크) -->
+	<select id="joinUserCheckId" resultType="_int">
+		SELECT COUNT(*)
+		FROM TBL_USER
+		WHERE USER_ID = #{user_id}
+	</select>
 	<!-- 회원가입 -->
-	<insert id="signUpUser">
+	<insert id="joinUser">
 		INSERT INTO TBL_USER (USER_ID, USER_PW, USER_NAME, USER_NICKNAME, USER_EMAIL, USER_PHONE_NUM)
 		VALUES (#{user_id}, #{user_pw}, #{user_name}, #{user_nickname}, #{user_email}, #{user_phone_num})
 	</insert>
