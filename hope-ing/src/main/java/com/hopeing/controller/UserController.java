@@ -30,8 +30,13 @@ public class UserController {
 	@PostMapping("join")
 	public ResponseEntity<String> joinUserPOST(UserVO user) {
 		boolean duplicateId = userService.joinCheckDuplicateId(user.getUser_id());
+		boolean duplicateNickname = userService.joinCheckDuplicateNickname(user.getUser_nickname());
+		
 		if (duplicateId) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 아이디입니다.");
+		}
+		else if (duplicateNickname) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 닉네임입니다.");
 		}
 		else {
 			userService.joinUser(user);
