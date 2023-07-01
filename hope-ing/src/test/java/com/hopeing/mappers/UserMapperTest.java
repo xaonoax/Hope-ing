@@ -16,21 +16,6 @@ public class UserMapperTest {
 	@Autowired
 	private UserMapper userMapper;
 	
-	// 닉네임 중복 테스트 메서드
-//		@Test
-		public void joinCheckDuplicateNicknameTest() {
-			String user_nickname = "test2"; // 중복되는 닉네임으로 테스트
-			
-			UserVO user = userMapper.joinCheckDuplicateId(user_nickname);
-
-			if (user != null) {
-				log.info("중복된 닉네임입니다.");
-			}
-			else {
-				log.info("중복된 닉네임이 아닙니다.");
-			}
-		}
-	
 	// 아이디 중복 테스트 메서드
 //	@Test
 	public void joinCheckDuplicateIdTest() {
