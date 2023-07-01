@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.tymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/join.css">
 <title>Hope-ing</title>
 </head>
 <body>
@@ -9,13 +11,14 @@
 	<form method="post" id="joinForm">
 		<div class="user_id" style="text-align: center;">
 			<div class="user_id_input_box">
-				<input class="user_id_input" name="user_id" placeholder="아이디">
+				<input class="user_id_input" name="user_id" placeholder="아이디" required>
+				<div class="error-message" style="color: red;"></div>
 			</div>
 		</div>
 		<br>
 		<div class="user_pw" style="text-align: center;">
 			<div class="user_pw_input_box">
-				<input class="user_pw_input" name="user_pw" placeholder="비밀번호" required>
+				<input class="user_pw_input" name="user_pw" placeholder="비밀번호">
 			</div>
 		</div>
 		<br>
@@ -48,5 +51,35 @@
 		</div>
 	</form>
 </div>
+<script th:src="@{/js/jquery-3.6.4.js}"></script>
+<script>
+	$(document).ready(function() {
+		// 회원가입 폼 제출 시 AJAX 요청
+		$('#joinForm').submit(function(e) {
+			e.preventDefault();
+			var form = $(this);
+			var url = form.attr('action');
+			var method = form.attr('method');
+			var formData = form.serialize();
+			var errorMessage = $('.error-message');  // 에러 메시지 요소
+			
+			$.ajax({
+				url: url,
+				method: method,
+				data: formData,
+				success: function(response) {
+					alert(response);  // 회원가입이 완료되었을 때 메시지 출력
+					location.href = '/hope-ing/user/login';  // 로그인 페이지로 이동
+				},
+				error: function(xhr) {
+					if (xhr.status === 409) {
+						$('.user_id_input').addClass('invalid');  // 아이디 입력란에 invalid 클래스 추가
+						errorMessage.text('*사용 중인 아이디입니다.');  // 에러 메시지 출력
+					}
+				}
+			});
+		});
+	});
+</script>
 </body>
 </html>

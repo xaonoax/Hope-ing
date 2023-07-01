@@ -18,18 +18,17 @@ public class UserMapperTest {
 	
 	// 아이디 중복 테스트 메서드
 //	@Test
-	public void joinUserCheckIdTest() {
-		String userId = "test1";
-		int duplicateIdCount = userMapper.joinUserCheckId(userId);
+	public void joinCheckDuplicateIdTest() {
+		String user_id = "test1"; // 중복되는 아이디로 테스트
 		
-		if (duplicateIdCount > 0) {
-			log.info("사용 중인 아이디입니다.");
-		}
-		else {
-			log.info("사용 가능한 아이디입니다.");
-		}
-		
-	}
+		 UserVO user = userMapper.joinCheckDuplicateId(user_id);
+
+        if (user != null) {
+            log.info("중복된 아이디입니다.");
+        } else {
+            log.info("중복된 아이디가 아닙니다.");
+        }
+    }
 	
 	// 회원가입 테스트 메서드
 //	@Test

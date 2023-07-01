@@ -1,7 +1,8 @@
 package com.hopeing.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,20 +23,19 @@ public class UserController {
 	
 	// 회원가입 페이지 이동
 	@GetMapping("join")
-	public void joinUserGET(Model model) {
-		model.addAttribute("errorMessage", "");
+	public void joinUserGET() {
 	}
 	
 	// 회원가입 실행
 	@PostMapping("join")
-	public String joinUserPOST(UserVO user, Model model) {
-		try {
-			userService.joinUser(user);
-			return "redirect:/hope-ing/user/login";
+	public ResponseEntity<String> joinUserPOST(UserVO user) {
+		boolean DuplicateId = userService.joinCheckDuplicateId(user.getUser_id());
+		if (DuplicateId) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 아이디입니다.");
 		}
-		catch (IllegalArgumentException e) {
-			model.addAttribute("errorMessage", e.getMessage());
-			return "join";
+		else {
+			userService.joinUser(user);
+			return ResponseEntity.ok("회원가입이 완료되었습니다.");
 		}
 	}
 }
