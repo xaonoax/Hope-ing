@@ -29,8 +29,8 @@ public class UserController {
 	// 회원가입 실행
 	@PostMapping("join")
 	public ResponseEntity<String> joinUserPOST(UserVO user) {
-		boolean DuplicateId = userService.joinCheckDuplicateId(user.getUser_id());
-		if (DuplicateId) {
+		boolean duplicateId = userService.joinCheckDuplicateId(user.getUser_id());
+		if (duplicateId) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 아이디입니다.");
 		}
 		else {

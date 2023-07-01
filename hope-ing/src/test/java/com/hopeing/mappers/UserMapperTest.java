@@ -21,14 +21,15 @@ public class UserMapperTest {
 	public void joinCheckDuplicateIdTest() {
 		String user_id = "test1"; // 중복되는 아이디로 테스트
 		
-		 UserVO user = userMapper.joinCheckDuplicateId(user_id);
+		UserVO user = userMapper.joinCheckDuplicateId(user_id);
 
-        if (user != null) {
-            log.info("중복된 아이디입니다.");
-        } else {
-            log.info("중복된 아이디가 아닙니다.");
-        }
-    }
+		if (user != null) {
+			log.info("중복된 아이디입니다.");
+		}
+		else {
+			log.info("중복된 아이디가 아닙니다.");
+		}
+	}
 	
 	// 회원가입 테스트 메서드
 //	@Test
