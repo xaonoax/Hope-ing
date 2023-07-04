@@ -10,6 +10,13 @@ import com.hopeing.mappers.UserMapper;
 public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
+
+	// 아이디 중복 체크(회원가입)
+	@Override
+	public boolean checkDuplicateId(String user_id) {
+		UserVO user = userMapper.checkDuplicateId(user_id);
+		return user != null;
+	}
 	
 	// 회원가입
 	@Override
