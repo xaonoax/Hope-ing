@@ -65,29 +65,29 @@
 </div>
 <script th:src="@{/js/jquery-3.6.4.js}"></script>
 <script>
-// 아이디 중복 체크 함수
-function checkDuplicateUserId(userId) {
-    var isDuplicate = false;
-    
-    // AJAX를 이용하여 서버에 아이디 중복 체크 요청
-    $.ajax({
-        type: "GET",
-        url: "/hope-ing/user/join",
-        data: { user_id: userId },
-        async: false, // 동기 요청 (응답이 올 때까지 대기)
-        success: function(response) {
-            if (response) {
-                // 중복된 아이디인 경우
-                isDuplicate = true;
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-    
-    return isDuplicate;
-}
+	// 아이디 중복 체크 함수
+	function checkDuplicateUserId(userId) {
+		var isDuplicate = false;
+		
+		// AJAX를 이용하여 서버에 아이디 중복 체크 요청
+		$.ajax({
+			type: "GET",
+			url: "/hope-ing/user/join",
+			data: { user_id: userId },
+			async: false, // 동기 요청 (응답이 올 때까지 대기)
+			success: function(response) {
+				if (response) {
+					// 중복된 아이디인 경우
+					isDuplicate = true;
+				}
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
+		return isDuplicate;
+	}
+	
 	const form = document.getElementById('joinForm');
 	const userIdInput = document.querySelector('.user_id_input');
 	const userPwInput = document.querySelector('.user_pw_input');
