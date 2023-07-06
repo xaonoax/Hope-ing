@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
-.user_id_input.invalid {
-		border-color: red;
+*{
+	margin: 0;
+	padding:0;
+}
+
+/* 중복 아이디 유무 */
+.user_id_input_fail {
+	color: red;
+	display: none;
+}
+
+.final_id_ck {
+	display: none;
 }

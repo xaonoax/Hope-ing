@@ -11,9 +11,11 @@
 	<form method="post" id="joinForm">
 		<div class="user_id" style="text-align: center;">
 			<div class="user_id_input_box">
-				<input class="user_id_input" name="user_id" placeholder="아이디(5~20자의 영문 소문자, 숫자, 특수기호(_))" required>
+				<input class="user_id_input" name="user_id" placeholder="아이디(5~20자의 영문 소문자, 숫자, 특수기호(_))">
 				<div class="error-message" style="color: red;"></div>
 			</div>
+			<span class="user_id_input_fail">*사용 중인 아이디입니다.</span>
+			<span class="final_id_ck"></span>
 		</div>
 		<br>
 		<div class="user_pw" style="text-align: center;">
@@ -65,28 +67,56 @@
 </div>
 <script th:src="@{/js/jquery-3.6.4.js}"></script>
 <script>
-	// 아이디 중복 체크 함수
-	function checkDuplicateUserId(userId) {
-		var isDuplicate = false;
+	var idCheck = false;
+	var idCkCheck = false;
+	
+	// 아이디 중복 검사
+	$('.user_id_input').on("propertychange change keyup paste input", function(){
+
+		var user_id = $('.user_id_input').val();
+		var data = {user_id : user_id}
 		
-		// AJAX를 이용하여 서버에 아이디 중복 체크 요청
 		$.ajax({
-			type: "GET",
-			url: "/hope-ing/user/join",
-			data: { user_id: userId },
-			async: false, // 동기 요청 (응답이 올 때까지 대기)
-			success: function(response) {
-				if (response) {
-					// 중복된 아이디인 경우
-					isDuplicate = true;
+			type : "post",
+			url : "hope-ing/user/idCheck",
+			data : data,
+			success : function(result){
+				if(result != 'fail') {
+					$('.user_id_input_fail').css("display", "none");
+					idCheck = true;
+					
 				}
-			},
-			error: function(xhr, status, error) {
-				console.error(error);
+				else {
+					$('.user_id_input_fail').css("display", "inline-block");
+					idCheck = false;
+				}
 			}
 		});
-		return isDuplicate;
-	}
+	});
+	
+	$(document).ready(function(){
+		//회원가입 버튼(회원가입 기능 작동)
+		$("#join_button").click(function(){
+			
+			/* 입력값 변수 */
+			var user_id = $('.user_id_input').val();  // 아이디 입력란
+			
+			/* 아이디 유효성 검사 */
+			if(user_id == ""){
+		        $('.final_id_ck').css('display','block');
+		        idCheck = false;
+		    }
+			else{
+		        $('.final_id_ck').css('display', 'none');
+		        idCheck = true;
+		    }
+			
+			/* 최종 유효성 검사 */
+	        if(idCheck&&idCkCheck){
+
+	        }
+		});
+	});
 	
 	const form = document.getElementById('joinForm');
 	const userIdInput = document.querySelector('.user_id_input');
@@ -96,22 +126,10 @@
 	const userNicknameInput = document.querySelector('.user_nickname_input');
 	const userEmailInput = document.querySelector('.user_email_input');
 	const userPhoneNumInput = document.querySelector('.user_phone_num_input');
-	
+
 	form.addEventListener('submit', function(event) {
 		event.preventDefault();
-		// 아이디 중복 체크
-		const userId = userIdInput.value;
-		const isDuplicate = checkDuplicateUserId(userId);
-		
-		if (isDuplicate) {
-            userIdInput.classList.add('error');
-            userIdInput.nextElementSibling.innerText = '이미 사용 중인 아이디입니다.';
-            return;
-        } else {
-            userIdInput.classList.remove('error');
-            userIdInput.nextElementSibling.innerText = '';
-        }
-		
+
 		// 정규 표현식 패턴 설정
 		const userIdPattern = /^[\w]{5,20}$/;
 		const userPwPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=!*])(?!.*\s).{8,20}$/;
@@ -119,7 +137,7 @@
 		const userNicknamePattern = /^[\w가-힣]{2,20}$/;
 		const userEmailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 		const userPhoneNumPattern = /^\d{10,20}$/;
-		
+
 		// 아이디 정규식
 		if (!userIdPattern.test(userIdInput.value)) {
 			userIdInput.classList.add('error');
@@ -129,7 +147,7 @@
 			userIdInput.classList.remove('error');
 			userIdInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 비밀번호 정규식
 		if (!userPwPattern.test(userPwInput.value)) {
 			userPwInput.classList.add('error');
@@ -139,7 +157,7 @@
 			userPwInput.classList.remove('error');
 			userPwInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 비밀번호 확인
 		if (userPwInput.value !== userPwConfirmInput.value) {
 			userPwConfirmInput.classList.add('error');
@@ -149,7 +167,7 @@
 			userPwConfirmInput.classList.remove('error');
 			userPwConfirmInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 이름 정규식
 		if (!userNamePattern.test(userNameInput.value)) {
 			userNameInput.classList.add('error');
@@ -159,7 +177,7 @@
 			userNameInput.classList.remove('error');
 			userNameInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 닉네임 정규식
 		if (!userNicknamePattern.test(userNicknameInput.value)) {
 			userNicknameInput.classList.add('error');
@@ -169,7 +187,7 @@
 			userNicknameInput.classList.remove('error');
 			userNicknameInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 이메일 정규식
 		if (!userEmailPattern.test(userEmailInput.value)) {
 			userEmailInput.classList.add('error');
@@ -179,7 +197,7 @@
 			userEmailInput.classList.remove('error');
 			userEmailInput.nextElementSibling.innerText = '';
 		}
-		
+
 		// 전화번호 정규식
 		if (!userPhoneNumPattern.test(userPhoneNumInput.value)) {
 			userPhoneNumInput.classList.add('error');
@@ -189,7 +207,7 @@
 			userPhoneNumInput.classList.remove('error');
 			userPhoneNumInput.nextElementSibling.innerText = '';
 		}
-		
+
 		if (!form.querySelectorAll('.error').length) {
 			form.submit();
 		}

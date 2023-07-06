@@ -11,11 +11,10 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
 	
-	// 아이디 중복 체크
+	// 아이디 중복 체크(회원가입)
 	@Override
-	public boolean checkDuplicateUserId(String user_id) {
-		int count = userMapper.checkDuplicateUserId(user_id);
-		return count > 0;
+	public int joinCheckUserId(String user_id) {
+		return userMapper.joinCheckUserId(user_id);
 	}
 	
 	// 회원가입

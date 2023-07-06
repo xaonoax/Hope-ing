@@ -1,12 +1,10 @@
 package com.hopeing.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.UserService;
@@ -22,11 +20,18 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	@GetMapping("checkDuplicateUserId")
-	public ResponseEntity<Boolean> checkDuplicateUserId(@RequestParam("user_id") String user_id) {
-		// 아이디 중복 체크
-		boolean isDuplicate = userService.checkDuplicateUserId(user_id);
-		return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
+	// 아이디 중복 체크(회원가입)
+	@PostMapping("idCheck")
+	@ResponseBody
+	public String joinCheckUserId (String user_id) {
+		int result = userService.joinCheckUserId(user_id);
+		
+		if(result != 0) {
+			return "fail";  // 중복된 아이디
+		}
+		else {
+			return "success";
+		}
 	}
 	
 	// 회원가입 페이지 이동
