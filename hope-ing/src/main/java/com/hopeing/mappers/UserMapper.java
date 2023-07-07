@@ -7,8 +7,8 @@ import com.hopeing.beans.vo.UserVO;
 @Mapper
 public interface UserMapper {
 	// 아이디 중복 체크(회원가입)
-	public int joinCheckUserId(String user_id);
-	
+	public int userIdCheck(String user_id);
+    
 	// 회원가입
 	public void joinUser(UserVO user);
 }

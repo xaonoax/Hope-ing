@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hopeing.mappers.UserMapper">
-	<!-- 아이디 중복 체크(회원가입) -->
-	<select id="joinCheckUserId" resultType="_int">
+	<!-- 아이디 중복 검사 -->
+	<select id="userIdCheck" resultType="_int">
 		SELECT COUNT(*)
 		FROM TBL_USER
 		WHERE USER_ID = #{user_id}

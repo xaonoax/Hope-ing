@@ -22,8 +22,8 @@ public class UserMapperTest {
 		String id = "test1"; // 존재하는 아이디
 		String id2 = "test2"; // 존재하지 않는 아이디
 		
-		userMapper.joinCheckUserId(id);
-		userMapper.joinCheckUserId(id2);
+		userMapper.userIdCheck(id);
+		userMapper.userIdCheck(id2);
 	}
 	
 	// 회원가입 테스트

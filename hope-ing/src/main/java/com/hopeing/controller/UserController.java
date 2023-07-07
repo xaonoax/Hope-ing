@@ -20,11 +20,12 @@ public class UserController {
 	
 	private final UserService userService;
 	
-	// 아이디 중복 체크(회원가입)
+	// 아이디 중복 검사
 	@PostMapping("idCheck")
 	@ResponseBody
-	public String joinCheckUserId (String user_id) {
-		int result = userService.joinCheckUserId(user_id);
+	public String idCheck(String user_id) {
+		
+		int result = userService.userIdCheck(user_id);
 		
 		if(result != 0) {
 			return "fail";  // 중복된 아이디
@@ -43,6 +44,7 @@ public class UserController {
 	// 회원가입 실행
 	@PostMapping("join")
 	public String joinUserPOST(UserVO user) {
+		
 		userService.joinUser(user);
 		
 		return "redirect:/hope-ing/user/login";

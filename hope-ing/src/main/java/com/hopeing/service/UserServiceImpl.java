@@ -13,8 +13,8 @@ public class UserServiceImpl implements UserService{
 	
 	// 아이디 중복 체크(회원가입)
 	@Override
-	public int joinCheckUserId(String user_id) {
-		return userMapper.joinCheckUserId(user_id);
+	public int userIdCheck(String user_id) {
+		return userMapper.userIdCheck(user_id);
 	}
 	
 	// 회원가입
