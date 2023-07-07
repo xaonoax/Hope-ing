@@ -6,6 +6,9 @@ import com.hopeing.beans.vo.UserVO;
 
 @Mapper
 public interface UserMapper {
+	// 로그인
+	public UserVO loginUser(UserVO user);
+	
 	// 아이디 중복 체크(회원가입)
 	public int userIdCheck(String user_id);
     

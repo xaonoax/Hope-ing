@@ -11,6 +11,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
 	
+	// 로그인
+	@Override
+	public UserVO loginUser(UserVO user) {
+		return userMapper.loginUser(user);
+	}
+	
 	// 아이디 중복 체크(회원가입)
 	@Override
 	public int userIdCheck(String user_id) {

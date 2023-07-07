@@ -20,6 +20,21 @@ public class UserController {
 	
 	private final UserService userService;
 	
+	// 로그인 페이지로 이동
+	@GetMapping("login")
+	public void loginUserGET() {
+		
+	}
+	
+	// 로그인
+	@PostMapping("login")
+	public String loginUserPOST(UserVO user) {
+		
+		userService.loginUser(user);
+		
+		return "redirect:/hope-ing";
+	}
+	
 	// 아이디 중복 검사
 	@PostMapping("idCheck")
 	@ResponseBody
