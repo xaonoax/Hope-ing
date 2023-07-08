@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+/* 비밀번호 눈 모양 아이콘 */
+.user_pw_input_box {
+  position: relative;
+}
+
+.user_pw_eye {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 2px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
+}
