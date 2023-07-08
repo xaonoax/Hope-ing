@@ -14,3 +14,35 @@
 .final_id_ck {
 	display: none;
 }
+
+/* 비밀번호 눈 모양 아이콘 */
+.user_pw_input_box {
+  position: relative;
+}
+
+.user_pw_eye {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 2px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* 비밀번호 확인 눈 모양 아이콘 */
+.user_pw_confirm_input_box {
+  position: relative;
+}
+
+.user_pw_confirm_eye {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 2px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
+}

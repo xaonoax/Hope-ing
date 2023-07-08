@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
 <link rel="stylesheet" href="/css/join.css">
+<script 개인 폰트어썸 kit></script>
 <title>Hope-ing</title>
 </head>
 <body>
@@ -13,21 +14,27 @@
 			<div class="user_id_input_box">
 				<input class="user_id_input" name="user_id" placeholder="아이디(5~20자의 영문 소문자, 숫자, 특수기호(_))">
 			</div>
-				<span class="user_id_input_fail">*사용 중인 아이디입니다.</span>
+				<span class="user_id_input_fail">사용 중인 아이디입니다.</span>
 				<span class="final_id_ck"></span>
-				<span class="user_id_warning" style="display: none; color: red;">아이디를 다시 입력하세요.</span>
+				<span class="user_id_warning" style="display: none; color: red;">잘못된 형식의 아이디입니다.</span>
 		</div>
 		<br>
 		<div class="user_pw" style="text-align: center;">
 			<div class="user_pw_input_box">
-				<input class="user_pw_input" name="user_pw" placeholder="비밀번호(8~20자의 영문 대/소문자, 숫자, 특수문자)">
-				<span class="user_pw_warning" style="display: none; color: red;">비밀번호는 8~20자의 영문 대/소문자, 숫자, 특수문자로 입력해주세요.</span>
+				<input class="user_pw_input" id="user_pw" name="user_pw" type="password" placeholder="비밀번호(8~20자의 영문 대/소문자, 숫자, 특수문자)">
+				<div class="user_pw_eye">
+					<i class="fa-solid fa-eye fa-sm"></i>
+				</div>
+				<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
 			</div>
 		</div>
 		<br>
 		<div class="user_pw_confirm" style="text-align: center;">
 			<div class="user_pw_confirm_input_box">
 				<input class="user_pw_confirm_input" name="user_pw_confirm" placeholder="비밀번호 확인">
+				<div class="user_pw_confirm_eye">
+					<i class="fa-solid fa-eye fa-sm"></i>
+				</div>
 				<span class="user_pw_confirm_warning" style="display: none; color: red;">비밀번호가 일치하지 않습니다.</span>
 			</div>
 		</div>
@@ -42,7 +49,7 @@
 		<div class="user_nickname" style="text-align: center;">
 			<div class="user_nickname_input_box">
 				<input class="user_nickname_input" name="user_nickname" placeholder="닉네임(2~20자의 영문 소문자, 한글, 숫자, 특수기호(_)" >
-				<span class="user_nickname_warning" style="display: none; color: red;">닉네임은 영문 소문자, 한글, 숫자, 특수기호(_)로 최소 2자 이상 입력해주세요.</span>
+				<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
 			</div>
 		</div>
 		<br>
@@ -67,6 +74,40 @@
 </div>
 <script th:src="@{/js/jquery-3.6.4.js}"></script>
 <script>
+	// 비밀번호 확인 눈 모양 아이콘
+	$(document).ready(function(){
+		$('.user_pw_confirm_eye').on('click', function(){
+			var input = $(this).siblings('.user_pw_confirm_input');
+			input.toggleClass('active');
+			
+			if (input.hasClass('active')) {
+				$(this).find('i').attr('class', 'fa-solid fa-eye-slash fa-sm');
+				input.attr('type', 'text');
+			}
+			else {
+				$(this).find('i').attr('class', 'fa-solid fa-eye fa-sm');
+				input.attr('type', 'password');
+			}
+		});
+	});
+	
+	//비밀번호 눈 모양 아이콘
+	$(document).ready(function(){
+		$('.user_pw_eye').on('click', function(){
+			var input = $(this).siblings('.user_pw_input');
+			input.toggleClass('active');
+			
+			if (input.hasClass('active')) {
+				$(this).find('i').attr('class', 'fa-solid fa-eye-slash fa-sm');
+				input.attr('type', 'text');
+			}
+			else {
+				$(this).find('i').attr('class', 'fa-solid fa-eye fa-sm');
+				input.attr('type', 'password');
+			}
+		});
+	});
+
 	var idCheck = false;
 	var idCkCheck = false;
 	
@@ -81,12 +122,12 @@
 	
 	// 아이디 중복 검사
 	function checkDuplicateId(callback) {
-		var user_id = $('.user_id_input').val();			// .id_input에 입력되는 값
-		var data = {user_id : user_id}				// '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
+		var user_id = $('.user_id_input').val();
+		var data = {user_id : user_id}
 		
 		$.ajax({
 			type : "post",
-			url : "/hope-ing/user/idCheck",
+			url : "/hope-ing/user/userIdCheck",
 			data : data,
 			success : function(result){
 				if(result != 'fail') {
@@ -121,7 +162,7 @@
 			var user_email = $(".user_email_input").val();
 			var user_phone_num = $(".user_phone_num_input").val();
 			
-			/* 아이디 유효성 검사 */
+			// 아이디 중복 검사	
 			if(user_id == ""){
 				$('.final_id_ck').css('display','block');
 				idCheck = false;
@@ -131,6 +172,7 @@
 				idCheck = true;
 			}
 			
+
 			// 아이디 검사
 			if (!idPattern.test(user_id)) {
 				$(".user_id_input").addClass("invalid");
@@ -147,7 +189,8 @@
 				$(".user_pw_input").addClass("invalid");
 				$(".user_pw_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_pw_input").removeClass("invalid");
 				$(".user_pw_warning").css("display", "none");
 			}
@@ -156,7 +199,8 @@
 				$(".user_pw_confirm_input").addClass("invalid");
 				$(".user_pw_confirm_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_pw_confirm_input").removeClass("invalid");
 				$(".user_pw_confirm_warning").css("display", "none");
 			}
@@ -166,7 +210,8 @@
 				$(".user_name_input").addClass("invalid");
 				$(".user_name_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_name_input").removeClass("invalid");
 				$(".user_name_warning").css("display", "none");
 			}
@@ -176,7 +221,8 @@
 				$(".user_nickname_input").addClass("invalid");
 				$(".user_nickname_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_nickname_input").removeClass("invalid");
 				$(".user_nickname_warning").css("display", "none");
 			}
@@ -186,7 +232,8 @@
 				$(".user_email_input").addClass("invalid");
 				$(".user_email_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_email_input").removeClass("invalid");
 				$(".user_email_warning").css("display", "none");
 			}
@@ -196,7 +243,8 @@
 				$(".user_phone_num_input").addClass("invalid");
 				$(".user_phone_num_warning").css("display", "block");
 				return;
-			} else {
+			}
+			else {
 				$(".user_phone_num_input").removeClass("invalid");
 				$(".user_phone_num_warning").css("display", "none");
 			}
