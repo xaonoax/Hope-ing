@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,17 +31,30 @@ public class UserController {
 	
 	// 로그인
 	@PostMapping("login")
-	public String loginUserPOST(UserVO user) {
+	public String loginUserPOST(UserVO user, HttpServletRequest request, RedirectAttributes rttr) {
 		
-		userService.loginUser(user);
+		HttpSession session = request.getSession();
+		UserVO loginUser = userService.loginUser(user);
+		
+		if(loginUser == null) {  // 아이디, 비밀번호 잘못 입력
+			int result = 0;
+			rttr.addFlashAttribute("result", result);
+			
+			return "redirect:/hope-ing/user/login";
+		}
+		
+		session.setAttribute("user", loginUser);  // 로그인 성공
+		
+		int result = 1;
+		rttr.addFlashAttribute("result", result);
 		
 		return "redirect:/hope-ing";
 	}
 	
 	// 아이디 중복 검사
-	@PostMapping("idCheck")
+	@PostMapping("userIdCheck")
 	@ResponseBody
-	public String idCheck(String user_id) {
+	public String userIdCheck(String user_id) {
 		
 		int result = userService.userIdCheck(user_id);
 		
