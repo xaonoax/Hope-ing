@@ -23,6 +23,16 @@ public class UserController {
 	
 	private final UserService userService;
 	
+	// 로그아웃
+	@GetMapping("logout")
+	public String logoutUserGET(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		session.invalidate(); // 세션 무효화
+		
+		return "redirect:/hope-ing";
+	}
+	
 	// 로그인 페이지로 이동
 	@GetMapping("login")
 	public void loginUserGET() {
