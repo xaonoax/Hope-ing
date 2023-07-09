@@ -11,6 +11,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
 	
+	// 정보 수정
+	@Override
+	public int updateUser(UserVO user){
+		return userMapper.updateUser(user);
+	}
+	
 	// 로그인
 	@Override
 	public UserVO loginUser(UserVO user) {

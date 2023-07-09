@@ -3,6 +3,9 @@ package com.hopeing.service;
 import com.hopeing.beans.vo.UserVO;
 
 public interface UserService {
+	// 정보 수정
+	public int updateUser(UserVO user);
+	
 	// 로그인
 	public UserVO loginUser(UserVO user);
 	

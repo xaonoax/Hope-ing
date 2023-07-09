@@ -6,6 +6,9 @@ import com.hopeing.beans.vo.UserVO;
 
 @Mapper
 public interface UserMapper {
+	// 정보 수정
+	public int updateUser(UserVO user);
+	
 	// 로그인
 	public UserVO loginUser(UserVO user);
 	
