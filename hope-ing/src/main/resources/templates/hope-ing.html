@@ -11,7 +11,15 @@
 			<a class="logo_button" href="/hope-ing">Hope-ing</a>
 		</div>
 		<div class="login_area">
-			<a class="login_button" href="/user/login">로그인 / 회원가입</a>
+			<!-- 로그인 상태에 따라 버튼 표시 여부 조건문 -->
+			<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+			<th:block th:if="${session.user == null}">
+				<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+			</th:block>
+			<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+			<th:block th:if="${session.user != null}">
+				<a class="logout_button" href="/hope-ing/user/logout">로그아웃</a>
+			</th:block>
 		</div>
 	</form>
 </div>
