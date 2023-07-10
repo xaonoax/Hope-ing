@@ -1,11 +1,13 @@
 package com.hopeing.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.UserService;
@@ -22,6 +24,54 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	
 	private final UserService userService;
+	
+	// 마이페이지로 이동
+	@GetMapping("mypage")
+	public String myPage(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
+		
+		if (user == null) {
+			return "redirect:hope-ing/user/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+		}
+		else {
+			model.addAttribute("user", user); // 회원 정보를 모델에 추가
+			
+			// 작성자 input 요소에 로그인 사용자의 닉네임 설정
+			model.addAttribute("user_id", user.getUser_id());
+			return "hope-ing/user/myPage"; // 마이 페이지 템플릿으로 이동
+	    }
+	}
+	
+	// 마이페이지(개인 정보 수정)
+	@PostMapping("mypage")
+	public RedirectView updateMyPage(UserVO user, HttpServletRequest request, RedirectAttributes rttr) {
+		
+		HttpSession session = request.getSession();
+		UserVO loginUser = (UserVO) session.getAttribute("user");
+		
+		if (loginUser == null) {
+			return new RedirectView("hope-ing/user/login"); // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+		}
+		else {
+			user.setUser_id(loginUser.getUser_id()); // 로그인된 사용자의 ID로 설정
+			
+			// 닉네임 업데이트
+			int result = userService.updateUser(user);
+			
+			if (result > 0) {
+				loginUser.setUser_id(user.getUser_id());
+				
+				session.setAttribute("user", loginUser);
+				rttr.addFlashAttribute("successMessage", "정보 수정이 완료되었습니다.");
+			} 
+			else {
+				rttr.addFlashAttribute("errorMessage", "정보 수정에 실패했습니다.");
+			}
+
+	        return new RedirectView("hope-ing/user/mypage?id=" + loginUser.getUser_id());
+	    }
+	}
 	
 	// 로그아웃
 	@GetMapping("logout")
