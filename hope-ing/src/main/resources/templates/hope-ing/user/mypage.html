@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/mypage.css">
+<script 개인 폰트어썸 kit></script>
+<title>Hope-ing</title>
+</head>
+<body>
+<div class="wrap">
+	<form method="post" id="mypageForm" th:object="${user}">
+		<div class="user_pw" style="text-align: center;">
+			<div class="user_pw_input_box">
+				<input class="user_pw_input" type="password" name="user_pw" placeholder="비밀번호">
+				<div class="user_pw_eye">
+					<i class="fa-solid fa-eye fa-sm"></i>
+				</div>
+				<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
+			</div>
+		</div>
+		<br>
+		<div class="user_nickname" style="text-align: center;">
+			<div class="user_nickname_input_box">
+				<input class="user_nickname_input" name="user_nickname" th:value="${session.user.user_nickname}">
+				<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
+			</div>
+		</div>
+		<br>
+		<div class="user_email" style="text-align: center;">
+			<div class="user_email_input_box">
+				<input class="user_email_input" name="user_email" th:value="${session.user.user_email}">
+				<span class="user_email_warning" style="display: none; color: red;">유효한 이메일 주소를 입력해주세요.</span>
+			</div>
+		</div>
+		<br>
+		<div class="user_phone_num" style="text-align: center;">
+			<div class="user_phone_num_input_box">
+				<input class="user_phone_num_input" type="text" name="user_phone_num" th:value="${session.user.user_phone_num}">
+				<span class="user_phone_num_warning" style="display: none; color: red;">전화번호 형식에 맞게 입력해주세요. (예: 01012345678)</span>
+			</div>
+		</div>
+				<br>
+		<div class="user_update_button_wrap">
+			<button id="user_update_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">수정하기</button>
+		</div>
+		<hr>
+	</form>
+</div>
+<script th:src="@{/js/jquery-3.6.4.js}"></script>
+<script>
+	//비밀번호 눈 모양 아이콘
+	$(document).ready(function(){
+		$('.user_pw_eye').on('click', function(){
+			var input = $(this).siblings('.user_pw_input');
+			input.toggleClass('active');
+			
+			if (input.hasClass('active')) {
+				$(this).find('i').attr('class', 'fa-solid fa-eye-slash fa-sm');
+				input.attr('type', 'text');
+			}
+			else {
+				$(this).find('i').attr('class', 'fa-solid fa-eye fa-sm');
+				input.attr('type', 'password');
+			}
+		});
+	});
+	
+	// 정규식 패턴
+	var idPattern = /^[a-z0-9_]{5,20}$/;
+	var passwordPattern = /^[a-zA-Z0-9!@#$%^&*()]{8,20}$/;
+	var passwordConfirmPattern = /^[a-zA-Z0-9!@#$%^&*()]{8,20}$/;
+	var namePattern = /^[가-힣]{2,}$/;
+	var nicknamePattern = /^[a-zA-Z0-9가-힣_]{2,20}$/;
+	var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	var phoneNumPattern = /^\d{3}(?!-)\d{3,4}(?!-)\d{4}$/;
+	
+	// 아이디 중복 검사
+	function checkDuplicateId(callback) {
+		var user_id = $('.user_id_input').val();
+		var data = {user_id : user_id}
+		
+		$.ajax({
+			type : "post",
+			url : "/hope-ing/user/userIdCheck",
+			data : data,
+			success : function(result){
+				if(result != 'fail') {
+					$('.user_id_input_fail').css("display", "none");
+					idCheck = true;
+					idCkCheck = true;
+				}
+				else {
+					$('.user_id_input_fail').css("display", "inline-block");
+					idCheck = false;
+					idCkCheck = false;
+				}
+				
+				if (callback && typeof callback === 'function') {
+					callback();
+				}
+			}
+		});	
+	}
+	
+	$(document).ready(function(){
+		//회원가입 버튼(회원가입 기능 작동)
+		$("#user_update_button").click(function(e){
+			e.preventDefault();
+			
+			/* 입력값 변수 */
+			var user_pw = $(".user_pw_input").val();
+			var user_pw_confirm = $(".user_pw_confirm_input").val();
+			var user_name = $(".user_name_input").val();
+			var user_nickname = $(".user_nickname_input").val();
+			var user_email = $(".user_email_input").val();
+			var user_phone_num = $(".user_phone_num_input").val();
+			
+			// 아이디 검사
+			if (!idPattern.test(user_id)) {
+				$(".user_id_input").addClass("invalid");
+				$(".user_id_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_id_input").removeClass("invalid");
+				$(".user_id_warning").css("display", "none");
+			}
+			
+			// 비밀번호 검사
+			if (!passwordPattern.test(user_pw)) {
+				$(".user_pw_input").addClass("invalid");
+				$(".user_pw_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_pw_input").removeClass("invalid");
+				$(".user_pw_warning").css("display", "none");
+			}
+			// 비밀번호 확인 검사
+			if (user_pw !== user_pw_confirm) {
+				$(".user_pw_confirm_input").addClass("invalid");
+				$(".user_pw_confirm_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_pw_confirm_input").removeClass("invalid");
+				$(".user_pw_confirm_warning").css("display", "none");
+			}
+			
+			// 이름 검사
+			if (!namePattern.test(user_name)) {
+				$(".user_name_input").addClass("invalid");
+				$(".user_name_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_name_input").removeClass("invalid");
+				$(".user_name_warning").css("display", "none");
+			}
+			
+			// 닉네임 검사
+			if (!nicknamePattern.test(user_nickname)) {
+				$(".user_nickname_input").addClass("invalid");
+				$(".user_nickname_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_nickname_input").removeClass("invalid");
+				$(".user_nickname_warning").css("display", "none");
+			}
+			
+			// 전화번호 검사
+			if (!phoneNumPattern.test(user_phone_num)) {
+				$(".user_phone_num_input").addClass("invalid");
+				$(".user_phone_num_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_phone_num_input").removeClass("invalid");
+				$(".user_phone_num_warning").css("display", "none");
+			}
+		});
+	});
+</script>
+</body>
+</html>
