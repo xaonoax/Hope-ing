@@ -25,6 +25,26 @@ public class UserController {
 	
 	private final UserService userService;
 	
+	// 회원탈퇴
+	@PostMapping("delete")
+	public String deleteUser(HttpServletRequest request, RedirectAttributes rttr) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
+		
+		// 회원 탈퇴 처리
+		boolean result = userService.deleteUser(user.getUser_id());
+		
+		if (result) {
+			session.invalidate(); // 세션 무효화
+			rttr.addFlashAttribute("successMessage", "회원 탈퇴가 완료되었습니다.");
+		}
+		else {
+			rttr.addFlashAttribute("errorMessage", "회원 탈퇴에 실패했습니다.");
+		}
+		
+		return "redirect:/hope-ing";
+	}
+	
 	// 마이페이지로 이동
 	@GetMapping("mypage")
 	public String myPage(Model model, HttpServletRequest request) {

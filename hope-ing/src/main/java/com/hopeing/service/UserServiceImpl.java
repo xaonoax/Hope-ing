@@ -11,9 +11,15 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserMapper userMapper;
 	
+	// 회원탈퇴
+	public boolean deleteUser(String user_id) {
+		int result = userMapper.deleteUser(user_id);
+		return result > 0;
+	}
+	
 	// 정보 수정
 	@Override
-	public int updateUser(UserVO user){
+	public int updateUser(UserVO user) {
 		return userMapper.updateUser(user);
 	}
 	

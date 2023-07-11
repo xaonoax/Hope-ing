@@ -3,6 +3,9 @@ package com.hopeing.service;
 import com.hopeing.beans.vo.UserVO;
 
 public interface UserService {
+	// 회원탈퇴
+	public boolean deleteUser(String user_id);
+	
 	// 정보 수정
 	public int updateUser(UserVO user);
 	
