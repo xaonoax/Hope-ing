@@ -56,7 +56,6 @@ public class UserController {
 		else {
 			user.setUser_id(loginUser.getUser_id()); // 로그인된 사용자의 ID로 설정
 			
-			// 닉네임 업데이트
 			int result = userService.updateUser(user);
 			
 			if (result > 0) {
@@ -69,7 +68,7 @@ public class UserController {
 				rttr.addFlashAttribute("errorMessage", "정보 수정에 실패했습니다.");
 			}
 
-	        return new RedirectView("hope-ing/user/mypage?id=" + loginUser.getUser_id());
+	        return new RedirectView("mypage?id=" + loginUser.getUser_id());
 	    }
 	}
 	
