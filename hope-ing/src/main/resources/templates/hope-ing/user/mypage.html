@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="/css/mypage.css">
 <script 개인 폰트어썸 kit></script>
 <title>Hope-ing</title>
 </head>
@@ -69,7 +68,6 @@
 	// 정규식 패턴
 	var idPattern = /^[a-z0-9_]{5,20}$/;
 	var passwordPattern = /^[a-zA-Z0-9!@#$%^&*()]{8,20}$/;
-	var passwordConfirmPattern = /^[a-zA-Z0-9!@#$%^&*()]{8,20}$/;
 	var namePattern = /^[가-힣]{2,}$/;
 	var nicknamePattern = /^[a-zA-Z0-9가-힣_]{2,20}$/;
 	var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -110,22 +108,10 @@
 			
 			/* 입력값 변수 */
 			var user_pw = $(".user_pw_input").val();
-			var user_pw_confirm = $(".user_pw_confirm_input").val();
 			var user_name = $(".user_name_input").val();
 			var user_nickname = $(".user_nickname_input").val();
 			var user_email = $(".user_email_input").val();
 			var user_phone_num = $(".user_phone_num_input").val();
-			
-			// 아이디 검사
-			if (!idPattern.test(user_id)) {
-				$(".user_id_input").addClass("invalid");
-				$(".user_id_warning").css("display", "block");
-				return;
-			}
-			else {
-				$(".user_id_input").removeClass("invalid");
-				$(".user_id_warning").css("display", "none");
-			}
 			
 			// 비밀번호 검사
 			if (!passwordPattern.test(user_pw)) {
@@ -136,27 +122,6 @@
 			else {
 				$(".user_pw_input").removeClass("invalid");
 				$(".user_pw_warning").css("display", "none");
-			}
-			// 비밀번호 확인 검사
-			if (user_pw !== user_pw_confirm) {
-				$(".user_pw_confirm_input").addClass("invalid");
-				$(".user_pw_confirm_warning").css("display", "block");
-				return;
-			}
-			else {
-				$(".user_pw_confirm_input").removeClass("invalid");
-				$(".user_pw_confirm_warning").css("display", "none");
-			}
-			
-			// 이름 검사
-			if (!namePattern.test(user_name)) {
-				$(".user_name_input").addClass("invalid");
-				$(".user_name_warning").css("display", "block");
-				return;
-			}
-			else {
-				$(".user_name_input").removeClass("invalid");
-				$(".user_name_warning").css("display", "none");
 			}
 			
 			// 닉네임 검사
@@ -170,6 +135,17 @@
 				$(".user_nickname_warning").css("display", "none");
 			}
 			
+			// 이메일 검사
+			if (!emailPattern.test(user_email)) {
+				$(".user_email_input").addClass("invalid");
+				$(".user_email_warning").css("display", "block");
+				return;
+			}
+			else {
+				$(".user_email_input").removeClass("invalid");
+				$(".user_email_warning").css("display", "none");
+			}
+			
 			// 전화번호 검사
 			if (!phoneNumPattern.test(user_phone_num)) {
 				$(".user_phone_num_input").addClass("invalid");
@@ -180,6 +156,8 @@
 				$(".user_phone_num_input").removeClass("invalid");
 				$(".user_phone_num_warning").css("display", "none");
 			}
+			
+			$("#mypageForm").submit();
 		});
 	});
 </script>
