@@ -15,8 +15,8 @@
 	<select id="getList" resultType="boardVO">
 		<![CDATA[
 		SELECT * FROM TBL_BOARD a
-		WHERE BNO > 0
-		ORDER BY BNO DESC
+		WHERE BOARD_NO > 0
+		ORDER BY BOARD_NO DESC
 		]]>
 	</select>
 </mapper>
