@@ -66,6 +66,7 @@ public class BoardController {
 	    }
 	    else {
 	    	List<BoardVO> getList = boardService.getList(); // 게시물 목록 가져오기
+	    	model.addAttribute("list", getList); // 목록을 모델에 추가
 	    	model.addAttribute("user", user); // 회원 정보를 모델에 추가
 	    	
 	    	return "/hope-ing/community/list";
