@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<title>Hope-ing</title>
+</head>
+<body>
+	<div class="wrap">
+		<form id="boardForm" action="/board/read" method="post">
+			<div class="read_area">
+				<div class="title_area">
+       				<span class="title_label"></span>
+       				<span class="title_value" th:text="${board.board_title}"></span>
+	    		</div>
+	    		<div class="writer_area">
+	        		<span class="writer_label"></span>
+        			<span class="writer_value" th:text="${board.board_writer_nickname}"></span>
+	   			</div>
+	   			<div class="date_area">
+	        		<span class="date_label"></span>
+	        		<span class="date_value" th:text="${#dates.format(board.board_regdate, 'yyyy-MM-dd HH:mm')}"></span>
+    			</div>
+    			<div class="content_area">
+        			<span class="content_label"></span>
+        			<span class="content_value" th:text="${board.board_content}"></span>
+    			</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
