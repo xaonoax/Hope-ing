@@ -35,7 +35,7 @@ public class BoardController {
 	
 	// 글 등록
 	@PostMapping("register")
-	public RedirectView registerPost(BoardVO board, HttpServletRequest request,
+	public RedirectView boardRegisterPOST(BoardVO board, HttpServletRequest request,
 			RedirectAttributes rttr,
 			MultipartFile file)
 	throws Exception{
