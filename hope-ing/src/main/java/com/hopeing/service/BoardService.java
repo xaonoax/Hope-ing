@@ -6,7 +6,7 @@ import com.hopeing.beans.vo.BoardVO;
 
 public interface BoardService {
 	// 게시글 조회
-	public BoardVO read(Long bno);
+	public BoardVO read(Long board_no);
 	
 	// 글 등록
 	public void register(BoardVO board);

@@ -18,8 +18,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 조회
 	@Override
-	public BoardVO read(Long bno) {
-		return boardMapper.read(bno);
+	public BoardVO read(Long board_no) {
+		return boardMapper.read(board_no);
 	}
 	
 	// 게시글 등록
