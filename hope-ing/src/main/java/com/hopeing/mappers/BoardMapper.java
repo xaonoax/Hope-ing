@@ -9,7 +9,7 @@ import com.hopeing.beans.vo.BoardVO;
 @Mapper
 public interface BoardMapper {
 	// 게시글 조회
-	public BoardVO read(Long bno);
+	public BoardVO read(Long board_no);
 	
 	// 게시글 등록
 	public void register(BoardVO board);
