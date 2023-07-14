@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -26,6 +27,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BoardController {
 	private final BoardService boardService;
+	
+	// 게시글 조회
+	@GetMapping("read")
+	public String boardReadGET(@RequestParam("board_no") Long board_bno, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
+		
+		BoardVO board = boardService.read(board_bno);
+		String writer = board.getBoard_writer_nickname();
+		
+		// 로그인한 사용자가 글 작성자인 경우에만 isWriter를 true로 설정
+		boolean Writer = (user != null && user.getUser_id().equals(writer));
+		model.addAttribute("board", board);
+		model.addAttribute("isWriter", Writer);
+		
+		return "/hope-ing/community/read";
+	}
 	
 	// 글 등록 페이지 이동
 	@GetMapping("register")
