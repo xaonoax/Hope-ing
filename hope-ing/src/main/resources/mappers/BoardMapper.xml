@@ -8,8 +8,8 @@
 	</select>
 	<!-- 글 등록 -->
 	<insert id="register" parameterType="boardVO">
-		INSERT INTO TBL_BOARD (BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER_ID)
-		VALUES (#{board_title}, #{board_content}, #{board_writer_id})
+		INSERT INTO TBL_BOARD (BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER_NICKNAME)
+		VALUES (#{board_title}, #{board_content}, #{board_writer_nickname})
 	</insert>
 	<!-- 게시판 목록 -->
 	<select id="getList" resultType="boardVO">
