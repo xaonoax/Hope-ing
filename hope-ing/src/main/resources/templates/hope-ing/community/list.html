@@ -21,18 +21,20 @@
 					<tbody>
 						<!-- 게시물 목록을 반복하며 표시 -->
 						<tr th:each="board : ${list}">
-							<td th:text="${board.bno}"></td>
-							<td><a th:href="@{/comuboard/read(bno=${board.bno})}" th:text="${board.title}"></a></td>
-							<td th:text="${board.writer}"></td>
-							<td th:text="${#dates.format(board.regdate, 'yyyy-MM-dd')}"></td>
-							<td th:text="${board.views}"></td>
-							<td th:text="${board.like_count}"></td>
+							<td th:text="${board.board_no}"></td>
+							<td><a th:href="@{/hope-ing/community/read(board_no=${board.board_no})}" th:text="${board.title}"></a></td>
+							<td th:text="${board.board_writer_id}"></td>
+							<td th:text="${#dates.format(board.board_regdate, 'yyyy-MM-dd')}"></td>
+							<td th:text="${board.board_views}"></td>
+							<td th:text="${board.board_like_count}"></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<button id="register_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">글쓰기</button>
 		</form>
+		<a href="/hope-ing/community/register">
+			<button id="register_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">글쓰기</button>
+		</a>
 	</div>
 </body>
 </html>
