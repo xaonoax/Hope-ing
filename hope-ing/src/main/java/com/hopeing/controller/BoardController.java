@@ -30,17 +30,20 @@ public class BoardController {
 	
 	// 게시글 조회
 	@GetMapping("read")
-	public String boardReadGET(@RequestParam("board_no") Long board_bno, Model model, HttpServletRequest request) {
+	public String boardReadGET(@RequestParam("board_no") Long board_no, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-		BoardVO board = boardService.read(board_bno);
+		BoardVO board = boardService.read(board_no);
 		String writer = board.getBoard_writer_nickname();
 		
 		// 로그인한 사용자가 글 작성자인 경우에만 isWriter를 true로 설정
 		boolean Writer = (user != null && user.getUser_id().equals(writer));
 		model.addAttribute("board", board);
 		model.addAttribute("isWriter", Writer);
+		
+		// 조회수 업데이트
+		boardService.viewsUpdate(board_no);
 		
 		return "/hope-ing/community/read";
 	}

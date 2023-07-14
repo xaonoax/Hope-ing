@@ -16,6 +16,12 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	// 게시글 조회수
+	@Override
+	public boolean viewsUpdate(Long board_no) {
+		return boardMapper.viewsUpdate(board_no);
+	}
+	
 	// 게시글 조회
 	@Override
 	public BoardVO read(Long board_no) {
