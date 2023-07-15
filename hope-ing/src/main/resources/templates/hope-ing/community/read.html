@@ -27,6 +27,17 @@
     			</div>
 			</div>
 		</form>
+		<div class="button_area">
+			<!-- 수정하기 버튼 -->
+			<a id="update_button" th:href="@{/hope-ing/community/update(board_no=${board.board_no})}" th:if="${board.board_writer_nickname == session.user.user_id}">
+				<button class="btn btn-lg">수정하기</button>
+			</a>
+			<!-- 삭제하기 버튼 -->
+			<form id="delete_form" th:action="@{/hope-ing/community/delete(board_no=${board.board_no})}" th:method="post" style="display: inline;" th:if="${board.board_writer_nickname == session.user.user_id}">
+				<input type="hidden" id="board_no" name="board_no" th:value="${board.board_no}" />
+				<button id="delete_button" class="btn btn-lg">삭제하기</button>
+			</form>
+		</div>
 	</div>
 </body>
 </html>
