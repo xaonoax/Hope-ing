@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hopeing.mappers.BoardMapper">
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		DELETE FROM TBL_BOARD
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="boardVO">
+		UPDATE TBL_BOARD
+		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
+		WHERE BOARD_NO = #{board_no}
+	</update>
 	<!-- 조회수 -->
 	<update id="viewsUpdate">
 	    UPDATE TBL_BOARD

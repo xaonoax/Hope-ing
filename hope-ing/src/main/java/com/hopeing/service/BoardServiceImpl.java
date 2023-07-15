@@ -16,6 +16,20 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	// 게시글 삭제
+	@Override
+	public int delete(Long board_no) {
+		return boardMapper.delete(board_no);
+	}
+	
+	// 게시글 수정
+	@Override
+	public boolean update(BoardVO board) {
+		int affectedRows = boardMapper.update(board);
+		
+		return affectedRows > 0;
+	}
+	
 	// 게시글 조회수
 	@Override
 	public boolean viewsUpdate(Long board_no) {
