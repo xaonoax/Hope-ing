@@ -37,7 +37,7 @@ public class BoardController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		BoardVO board = boardService.read(board_no);
-		String writer = board.getBoard_writer_nickname();
+		String writer = board.getBoard_writer_id();
 		
 		if (user == null || !user.getUser_id().equals(writer)) {
 			// 로그인하지 않았거나 작성자가 아닌 경우
@@ -70,7 +70,7 @@ public class BoardController {
 			return new RedirectView("/hope-ing/user/login"); // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 		}
 		else {
-			board.setBoard_writer_nickname(user.getUser_id()); // 작성자 설정
+			board.setBoard_writer_id(user.getUser_id()); // 작성자 설정
 			
 			boardService.update(board);
 			
@@ -85,7 +85,7 @@ public class BoardController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		BoardVO board = boardService.read(board_no);
-		String writer = board.getBoard_writer_nickname();
+		String writer = board.getBoard_writer_id();
 		
 		// 로그인한 사용자가 글 작성자인 경우에만 isWriter를 true로 설정
 		boolean Writer = (user != null && user.getUser_id().equals(writer));
@@ -117,7 +117,7 @@ public class BoardController {
 		}
 		else {
 			// 작성자 닉네임 업데이트
-	        board.setBoard_writer_nickname(user.getUser_id());
+	        board.setBoard_writer_id(user.getUser_id());
 			// 글 등록
 			boardService.register(board);
 			// 글 등록 후 전체 게시판으로 리다이렉션

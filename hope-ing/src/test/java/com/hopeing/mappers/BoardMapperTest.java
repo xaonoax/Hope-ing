@@ -23,7 +23,7 @@ public class BoardMapperTest {
 		
 		board.setBoard_title("title");
 		board.setBoard_content("content");
-		board.setBoard_writer_nickname("nickname");
+		board.setBoard_writer_id("id");
 		
 		// boardMapper.register(board);
 	}
