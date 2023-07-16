@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hopeing.mappers.ReplyMapper">
+	<!-- 각 게시글별 댓글 조회 -->
+	<select id="read" resultType="replyVO">
+		SELECT * FROM TBL_REPLY
+		WHERE REPLY_NO = #{reply_no}
+	</select>
+	<!-- 댓글 등록 -->
+	<insert id="register" parameterType="replyVO">
+		INSERT INTO TBL_REPLY (REPLY_BNO, REPLY_CONTENT, REPLY_WRITER_ID)
+		VALUES (#{reply_bno},#{reply_content}, #{reply_writer_id})
+	</insert>
+	<!-- 댓글 목록 -->
+	<select id="getList" resultType="replyVO">
+		<![CDATA[
+		SELECT REPLY_NO, REPLY_BNO, REPLY_CONTENT, REPLY_WRITER_ID, REPLYDATE, UPDATEDATE
+		FROM TBL_REPLY a
+		WHERE REPLY_BNO > 0
+		ORDER BY REPLY_NO DESC
+		]]>
+	</select>
+</mapper>
