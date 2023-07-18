@@ -19,8 +19,18 @@ public class ReplyMapperTest {
 	@Autowired
 	private ReplyMapper replyMapper;
 	
-	// 댓글 등록 테스트
+	// 각 게시글별 댓글 조회
 	@Test
+	public void testRead() {
+		Long reply_no = 7L;
+		ReplyVO reply = replyMapper.read(reply_no);
+		
+		log.info("reply ok");
+		log.info(reply.toString());
+	}
+	
+	// 댓글 등록 테스트
+//	@Test
 	public void testGetList() {
 		// 1개의 게시글에 댓글 2개씩 달아보기
 		IntStream.rangeClosed(1, 2).forEach(i -> {
