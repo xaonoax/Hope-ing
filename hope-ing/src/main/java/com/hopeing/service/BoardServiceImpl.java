@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hopeing.beans.vo.BoardVO;
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.mappers.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,18 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
+	
+	// 게시글 갯수
+	@Override
+	public int getTotal(Criteria cri) {
+		return boardMapper.getTotal(cri);
+	}
+	
+	// 게시글 목록 페이징
+	@Override
+	public List<BoardVO> getListWithPaging(Criteria cri) {
+		return boardMapper.getListWithPaging(cri);
+	}
 	
 	// 게시글 삭제
 	@Override

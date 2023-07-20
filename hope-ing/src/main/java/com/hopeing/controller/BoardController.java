@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.hopeing.beans.vo.BoardVO;
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.BoardService;
 
@@ -127,7 +128,7 @@ public class BoardController {
 	
 	// 전체게시판 목록 이동
 	@GetMapping("list")
-	public String listGET(Model model, HttpServletRequest request) {
+	public String listGET(Model model, HttpServletRequest request, Criteria cri) {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 	    

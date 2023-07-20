@@ -3,8 +3,15 @@ package com.hopeing.service;
 import java.util.List;
 
 import com.hopeing.beans.vo.BoardVO;
+import com.hopeing.beans.vo.Criteria;
 
 public interface BoardService {
+	// 게시글 갯수
+	public int getTotal(Criteria cri);
+	
+	// 게시글 목록 페이징
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	
 	// 게시글 삭제
 	public int delete(Long board_no);
 	

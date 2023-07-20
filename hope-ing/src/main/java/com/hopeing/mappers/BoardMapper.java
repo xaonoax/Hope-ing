@@ -5,9 +5,16 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hopeing.beans.vo.BoardVO;
+import com.hopeing.beans.vo.Criteria;
 
 @Mapper
 public interface BoardMapper {
+	// 게시글 갯수
+	public int getTotal(Criteria cri);
+	
+	// 게시글 목록 페이징
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	
 	// 게시글 삭제
 	public int delete(Long board_no);
 	
