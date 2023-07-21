@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hopeing.mappers.LikeMapper">
+	<!-- 좋아요 삭제 -->
+	<delete id="delete" parameterType="likeVO">
+		DELETE FROM TBL_LIKE
+		WHERE LIKE_NO = #{like_no} AND LIKE_ID = #{like_id}
+	</delete>
+	<!-- 좋아요 조회 -->
+	<select id="read" parameterType="map" resultType="likeVO">
+		SELECT * FROM TBL_LIKE
+		WHERE LIKE_NO = #{like_no} AND LIKE_ID = #{like_id}
+	</select>
+	<!-- 좋아요 수 업데이트 -->
+	<update id="updateLikeCount" parameterType="likeVO">
+		UPDATE TBL_LIKE
+		SET LIKE_COUNT = #{like_count}
+		WHERE LIKE_NO = #{like_no} AND LIKE_ID = #{like_id}
+	</update>
+	<!-- 좋아요 등록 -->
+	<insert id="insert" parameterType="likeVO">
+		<![CDATA[
+		INSERT INTO LIKE_TBL (LIKE_NO, LIKE_ID, LIKE_COUNT)
+		VALUES (#{like_no}, #{like_id}, #{like_count})
+		]]>
+	</insert>
+</mapper>

@@ -7,6 +7,9 @@ import com.hopeing.beans.vo.LikeVO;
 
 @Mapper
 public interface LikeMapper {
+	// 좋아요 번호, 좋아요 id로 정보 조회
+	public LikeVO read(Long like_no, String like_id);
+	
 	// 게시글의 좋아요 수
 	public Long getLikeCount(Long board_no);
 	
