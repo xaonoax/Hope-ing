@@ -28,13 +28,15 @@
 			</trim>
 		</if>
 	</sql>
+	<!-- 게시글 갯수 -->
 	<select id="getTotal" resultType="_int">
-		SELECT COUNT(*) FROM BOARD_TBL WHERE
+		SELECT COUNT(*) FROM TBL_BOARD WHERE
 		<![CDATA[
-		BNO > 0
+		BOARD_NO > 0
 		]]>
 		<include refid="criteria"></include>
 	</select>
+	<!-- 게시글 목록 페이징 -->
 	<select id="getListWithPaging" resultType="boardVO">
 		<![CDATA[
 		SELECT * FROM TBL_BOARD a
