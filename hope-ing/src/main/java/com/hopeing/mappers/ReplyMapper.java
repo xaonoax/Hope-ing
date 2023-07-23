@@ -9,7 +9,7 @@ import com.hopeing.beans.vo.ReplyVO;
 @Mapper
 public interface ReplyMapper {
 	// 댓글 삭제
-	public int delete(Long r_eplyno);
+	public int delete(Long reply_no);
 	
 	// 댓글 수정
 	public int update(ReplyVO reply);
