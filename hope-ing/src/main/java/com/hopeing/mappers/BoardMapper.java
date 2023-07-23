@@ -31,5 +31,5 @@ public interface BoardMapper {
 	public void register(BoardVO board);
 	
 	// 게시판 목록
-	public List<BoardVO> getList();
+	public List<BoardVO> getList(Criteria cri);
 }
