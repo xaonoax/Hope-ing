@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 목록
 	@Override
-	public List<BoardVO> getList() {
-		return boardMapper.getList();
+	public List<BoardVO> getList(Criteria cri) {
+		return boardMapper.getList(cri);
 	}
 }
