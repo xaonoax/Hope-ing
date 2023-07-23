@@ -17,8 +17,8 @@ public class LikeServiceImpl implements LikeService {
 	private LikeMapper likeMapper;
 	
     @Override
-    public Long getLikeCount(Long board_no) {
-    	return likeMapper.getLikeCount(board_no);
+    public Long likeCount(Long board_no) {
+    	return likeMapper.likeCount(board_no);
     }
     
     @Override
@@ -32,14 +32,15 @@ public class LikeServiceImpl implements LikeService {
     }
     
     @Override
-    public void toggle(Long like_no, String like_id) {
+    public void toggle(Long like_no, Long like_bno, String like_id) {
     	BoardVO board = new BoardVO();
     	
-    	LikeVO like = likeMapper.read(like_no, like_id);
+    	LikeVO like = likeMapper.read(like_no, like_bno, like_id);
     	
     	if (like == null) {  // 좋아요를 누르지 않았을 때
     		like = new LikeVO();
     		like.setLike_no(like_no);
+    		like.setLike_bno(like_bno);
     		like.setLike_id(like_id);
     		like.setLike_count(1L);
     		
