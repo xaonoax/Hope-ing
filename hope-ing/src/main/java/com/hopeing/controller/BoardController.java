@@ -1,7 +1,5 @@
 package com.hopeing.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.hopeing.beans.vo.BoardVO;
 import com.hopeing.beans.vo.Criteria;
+import com.hopeing.beans.vo.PageDTO;
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.BoardService;
 
@@ -133,11 +132,11 @@ public class BoardController {
 		UserVO user = (UserVO) session.getAttribute("user");
 	    
 	    if (user == null) {
-	    	return "redirect:/user/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+	    	return "redirect:/hope-ing/user/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 	    }
 	    else {
-	    	List<BoardVO> getList = boardService.getList(); // 게시물 목록 가져오기
-	    	model.addAttribute("list", getList); // 목록을 모델에 추가
+	    	model.addAttribute("pageMaker", new PageDTO(cri, boardService.getTotal(cri)));
+	    	model.addAttribute("list", boardService.getList(cri)); // 목록을 모델에 추가
 	    	model.addAttribute("user", user); // 회원 정보를 모델에 추가
 	    	
 	    	return "/hope-ing/community/list";
