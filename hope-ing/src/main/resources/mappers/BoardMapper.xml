@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hopeing.mappers.BoardMapper">
-<sql id="criteria">
+	<!-- 게시글의 좋아요 수 업데이트 -->
+	<update id="updateBoardLikeCount" parameterType="boardVO">
+		UPDATE TBL_BOARD
+		SET LIKE_COUNT = #{like_count}
+		WHERE BOARD_NO = #{board_no}
+	</update>
+	<sql id="criteria">
 		<if test="type != null and keyword != null">
 			<trim prefix="AND (" suffix=")" prefixOverrides="OR">
 				<foreach item="type" collection="typeArr">
