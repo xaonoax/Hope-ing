@@ -39,9 +39,9 @@
 				<button id="delete_button" class="btn btn-lg">삭제하기</button>
 			</form>
 			<!-- 좋아요 버튼 -->
-			<form id="like_form" th:action="@{/hope-ing/community/likes/{like_bno}(board_no=${board.board_no})}" th:method="post" style="display: inline;">
-				<input type="hidden" id="like_bno" name="like_bno" th:value="${board.board_no}" />
-				<input type="hidden" id="like_id" name="like_id" th:value="${session.user.user_id}" />
+			<form id="like_form" th:action="@{/hope-ing/community/likes/{board_no}(board_no=${board.board_no})}" th:method="post" style="display: inline;">
+				<input type="hidden" id="board_no" name="board_no" th:value="${board.board_no}" />
+				<input type="hidden" id="user_id" name="user_id" th:value="${session.user.user_id}" />
 				<a href="" class="paw-button">
     				<div class="text">
         				<svg>
@@ -119,8 +119,8 @@ document.querySelectorAll('.paw-button').forEach(elem => {
 	elem.addEventListener('click', e => {
 		e.preventDefault();
 		let number = elem.children[1].textContent;
-		let like_bno = document.querySelector('#like_bno').value;
-		let like_id = document.querySelector('#like_id').value;
+		let board_no = document.querySelector('#board_no').value;
+		let user_id = document.querySelector('#user_id').value;
 
 	if (!elem.classList.contains('animation')) {
 		elem.classList.add('animation');
@@ -138,7 +138,7 @@ document.querySelectorAll('.paw-button').forEach(elem => {
 			}, 600);
 		
 			// 좋아요 요청
-			fetch('/hope-ing/community/likes/' + like_bno + '?like_id=' + like_id, {
+			fetch('/hope-ing/community/likes/' + board_no + '?user_id=' + user_id, {
 				method: 'POST',
 			})
 				.then(response => {
