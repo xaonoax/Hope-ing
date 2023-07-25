@@ -17,6 +17,12 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardMapper boardMapper;
 	
+	// 번호별 게시글 조회
+	@Override
+	public BoardVO getBoardNo(Long board_no) {
+		return boardMapper.getBoardNo(board_no);
+	}
+	
 	// 게시글 갯수
 	@Override
 	public int getTotal(Criteria cri) {
