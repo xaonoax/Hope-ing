@@ -6,6 +6,9 @@ import com.hopeing.beans.vo.UserVO;
 
 @Mapper
 public interface UserMapper {
+	// 아이디로 사용자 정보 조회
+	public UserVO userId(String user_id);
+	
 	// 회원탈퇴
 	public int deleteUser(String user_id);
 	
