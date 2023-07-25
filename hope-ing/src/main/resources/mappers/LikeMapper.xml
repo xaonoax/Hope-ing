@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hopeing.mappers.LikeMapper">
+	<!-- 게시글의 좋아요 수 업데이트 -->
+	<update id="updateBoardLikeCount" parameterType="boardVO">
+		UPDATE TBL_BOARD
+		SET BOARD_LIKE_COUNT = #{board_like_count}
+		WHERE BOARD_NO = #{board_no}
+	</update>
 	<!-- 좋아요 삭제 -->
 	<delete id="delete" parameterType="likeVO">
 		DELETE FROM TBL_BOARD_LIKE
