@@ -9,7 +9,7 @@ import com.hopeing.beans.vo.Criteria;
 
 @Mapper
 public interface BoardMapper {
-	// 게시글 번호별 게시글
+	// 번호별 게시글 조회
 	public BoardVO getBoardNo(Long board_no);
 	
 	// 게시글 갯수
