@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -62,7 +63,9 @@ public class BoardController {
 	// 게시글 수정 처리
 	@PostMapping("update")
 	public RedirectView updatePOST(BoardVO board, HttpServletRequest request,
-			RedirectAttributes rttr) {
+			RedirectAttributes rttr,
+			MultipartFile file)
+		throws Exception {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
@@ -72,7 +75,7 @@ public class BoardController {
 		else {
 			board.setBoard_writer_id(user.getUser_id()); // 작성자 설정
 			
-			boardService.update(board);
+			boardService.update(board, file);
 			
 			return new RedirectView("/hope-ing/community/read?board_no=" + board.getBoard_no());
 	    }
@@ -107,7 +110,8 @@ public class BoardController {
 	// 글 등록
 	@PostMapping("register")
 	public RedirectView boardRegisterPOST(BoardVO board, HttpServletRequest request,
-			RedirectAttributes rttr)
+			RedirectAttributes rttr,
+			MultipartFile file)
 	throws Exception{
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
@@ -119,7 +123,7 @@ public class BoardController {
 			// 작성자 닉네임 업데이트
 	        board.setBoard_writer_id(user.getUser_id());
 			// 글 등록
-			boardService.register(board);
+			boardService.register(board, file);
 			// 글 등록 후 전체 게시판으로 리다이렉션
 			return new RedirectView("/hope-ing/community/list");
 		}

@@ -1,9 +1,12 @@
 package com.hopeing.service;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hopeing.beans.vo.BoardVO;
 import com.hopeing.beans.vo.Criteria;
@@ -43,8 +46,20 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 수정
 	@Override
-	public boolean update(BoardVO board) {
-		int affectedRows = boardMapper.update(board);
+	public boolean update(BoardVO board, MultipartFile file) throws Exception{
+		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/updatefiles";
+		
+		UUID uuid = UUID.randomUUID();
+		
+		String file_name = uuid + "_" + file.getOriginalFilename();
+		File saveFile = new File(projectPath, file_name);
+		
+		board.setBoard_file_name(file_name);
+		board.setBoard_file_path("/updatefiles/" + file_name);
+		
+		file.transferTo(saveFile);
+		
+		int affectedRows = boardMapper.update(board, file);
 		
 		return affectedRows > 0;
 	}
@@ -63,9 +78,20 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 게시글 등록
 	@Override
-	public void register(BoardVO board) {
-		boardMapper.register(board);
+	public void register(BoardVO board, MultipartFile file) throws Exception{
+		String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 		
+		UUID uuid = UUID.randomUUID();
+		
+		String file_name = uuid + "_" + file.getOriginalFilename();
+		File saveFile = new File(projectPath, file_name);
+		
+		board.setBoard_file_name(file_name);
+		board.setBoard_file_path("/files/" + file_name);
+		
+		file.transferTo(saveFile);
+		
+		boardMapper.register(board, file);
 	}
 	
 	// 게시글 목록

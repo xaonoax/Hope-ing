@@ -55,8 +55,8 @@
 	<!-- 게시글 수정 -->
 	<update id="update" parameterType="boardVO">
 		UPDATE TBL_BOARD
-		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
-		WHERE BOARD_NO = #{board_no}
+		SET BOARD_TITLE = #{board.board_title}, BOARD_CONTENT = #{board.board_content}, BOARD_FILE_NAME = #{board.board_file_name}, BOARD_FILE_PATH = #{board.board_file_path}
+		WHERE BOARD_NO = #{board.board_no}
 	</update>
 	<!-- 조회수 -->
 	<update id="viewsUpdate">
@@ -71,8 +71,8 @@
 	</select>
 	<!-- 글 등록 -->
 	<insert id="register" parameterType="boardVO">
-		INSERT INTO TBL_BOARD (BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER_ID)
-		VALUES (#{board_title}, #{board_content}, #{board_writer_id})
+		INSERT INTO TBL_BOARD (BOARD_TITLE, BOARD_CONTENT, BOARD_WRITER_ID, BOARD_FILE_NAME, BOARD_FILE_PATH)
+		VALUES (#{board.board_title}, #{board.board_content}, #{board.board_writer_id}, #{board.board_file_name}, #{board.board_file_path})
 	</insert>
 	<!-- 게시판 목록 -->
 	<select id="getList" resultType="boardVO">
