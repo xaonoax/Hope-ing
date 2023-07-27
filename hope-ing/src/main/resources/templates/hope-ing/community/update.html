@@ -7,8 +7,8 @@
 </head>
 <body>
 	<div class="wrap">
-		<form method="post" action="/hope-ing/community/update" th:object="${board}">
-				<input type="hidden" th:field="*{board_no}">
+		<form method="post" action="/hope-ing/community/update" th:object="${board}" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{board_no}">
 			<div class="update_area">
 				<div class="title_area">
 	                <label for="title">제목</label>
@@ -19,6 +19,7 @@
 	                <textarea class="form-control" id="board_content" rows="5" th:field="*{board_content}"></textarea>
 	            </div>
                 <br>
+                <input type="file" name="file">
 	            <button class="btn btn-lg" style="background-color: #9edfbf;">수정하기</button>
 			</div>
 			<br>
