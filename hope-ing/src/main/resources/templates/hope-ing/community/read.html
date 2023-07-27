@@ -22,6 +22,8 @@
 	        		<span class="date_label"></span>
 	        		<span class="date_value" th:text="${#dates.format(board.board_regdate, 'yyyy-MM-dd HH:mm')}"></span>
     			</div>
+    			<label for="photo"></label>
+					<img id="photo" class="photo_area" th:if="${board.board_file_path != null}" th:src="@{${board.board_file_path}}">
     			<div class="content_area">
         			<span class="content_label"></span>
         			<span class="content_value" th:text="${board.board_content}"></span>
