@@ -36,10 +36,10 @@ public class FacilitiesController {
 		
 		int offset = (page - 1) * ITEMS_PER_PAGE;
 		
-		String apiUrl = "http://api.odcloud.kr/api/15111389/v1/uddi:41944402-8249-4e45-9e9d-a52d0a7db1cc?" +
+		String apiUrl = "url 주소 입력" +
 			"page=" + page +
 			"&perPage=" + ITEMS_PER_PAGE +
-			"&serviceKey=dxvYHwYiFkHc4HZ9SR5fSErwIAFyZYxQ715v4q6aQ12W47RcM2rZveSKeM%2Bn%2Bx2d4i6OcRG7byZcLzebaTIGQg%3D%3D" +
+			"인증키 입력" +
 			"&_type=json";
 	
 		URL url = new URL(apiUrl);
