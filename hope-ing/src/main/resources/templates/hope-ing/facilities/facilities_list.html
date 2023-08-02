@@ -11,20 +11,17 @@
 		<thead>
 			<tr>
 				<th>시설명</th>
-				<th>카테고리1</th>
-				<th>카테고리2</th>
+				<th>분류</th>
 				<th>시도 명칭</th>
-				<th>시군구 명칭</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:each="facilities : ${facilitiesList}">
-				<td th:text="${facilities['시설명']}">시설명</td>
-				<td th:text="${facilities['카테고리1']}">카테고리1</td>
+				<td>
+				<a th:href="@{|/hope-ing/facilities/detail?시설명=${facilities['시설명']}|}" th:text="${facilities['시설명']}">시설명</a>
+				</td>
 				<td th:text="${facilities['카테고리2']}">카테고리2</td>
 				<td th:text="${facilities['시도_명칭']}">시도 명칭</td>
-				<td th:text="${facilities['시군구_명칭']}">시군구 명칭</td>
-				<td th:text="${facilities['법정읍면동명칭']}">법정읍면동명칭</td>
 			</tr>
 		</tbody>
 	</table>
