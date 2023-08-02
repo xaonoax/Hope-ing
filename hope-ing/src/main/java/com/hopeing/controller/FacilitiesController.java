@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FacilitiesController {
 	private static final int ITEMS_PER_PAGE = 20;
-	private static final String OPEN_API_URL = "http://api.odcloud.kr/api/15111389/v1/uddi:41944402-8249-4e45-9e9d-a52d0a7db1cc?";
+	private static final String OPEN_API_URL = "url 주소 입력";
 	
 	@GetMapping(value="/detail", produces="application/json; charset=utf-8")
 	public ModelAndView facilitiesDetail(@RequestParam("시설명") String facilitiesName) throws IOException, ParseException {
@@ -51,7 +51,7 @@ public class FacilitiesController {
 					"q=" + encodedFacilitiesName +
 					"&page=" + currentPage +
 					"&perPage=" + ITEMS_PER_PAGE +
-					"&serviceKey=dxvYHwYiFkHc4HZ9SR5fSErwIAFyZYxQ715v4q6aQ12W47RcM2rZveSKeM%2Bn%2Bx2d4i6OcRG7byZcLzebaTIGQg%3D%3D" +
+					"&serviceKey=인증키 입력" +
 					"&_type=json";
 			
 			List<FacilitiesVO> facilitiesData = getFacilitiesListFromOpenAPI(apiUrl);
@@ -83,7 +83,7 @@ public class FacilitiesController {
 		String apiUrl = OPEN_API_URL +
 			"page=" + page +
 			"&perPage=" + ITEMS_PER_PAGE +
-			"&serviceKey=dxvYHwYiFkHc4HZ9SR5fSErwIAFyZYxQ715v4q6aQ12W47RcM2rZveSKeM%2Bn%2Bx2d4i6OcRG7byZcLzebaTIGQg%3D%3D" +
+			"&serviceKey=인증키 입력" +
 			"&_type=json";
 		
 		List<FacilitiesVO> facilitiesList = getFacilitiesListFromOpenAPI(apiUrl);
