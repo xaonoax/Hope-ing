@@ -3,43 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<script 개인 폰트어썸 kit></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 javascript 키"></script>
 <title>Hope-ing</title>
 </head>
 <body>
 <h1>시설 상세 정보</h1>
-  <span th:text="${facilitiesData['시설명']}">시설명</span>
-  <br>
-  <span th:text="${facilitiesData['도로명주소']}">도로명 주소</span>
-  <br>
-  <span th:text="'(' + ${facilitiesData['지번주소']} + ')'">지번 주소</span>
-  <br>
-  <span th:text="${facilitiesData['전화번호']}">전화번호</span>
-  <br>
-  <span th:text="${facilitiesData['운영시간']}">운영시간</span>
-  <br>
-  <span th:text="${facilitiesData['휴무일']}">휴무일</span>
-  <br>
-  <span th:text="${facilitiesData['홈페이지']}">홈페이지</span>
-  <br>
-  <span th:text="${facilitiesData['주차_가능여부']}">주차 가능여부</span>
-  <br>
-  <span th:text="${facilitiesData['입장_이용료_가격_정보']}">입장(이용료)가격 정보</span>
-  <br>
-  <span th:text="${facilitiesData['애견_동반_추가_요금']}">애견 동반 추가 요금</span>
-  <br>
-  <span th:text="${facilitiesData['반려동물_동반_가능정보']}">반려동물 동반 가능정보</span>
-  <br>
-  <span th:text="${facilitiesData['반려동물_전용_정보']}">반려동물 전용 정보</span>
-  <br>
-  <span th:text="${facilitiesData['입장_가능_동물_크기']}">입장 가능 동물 크기</span>
-  <br>
-  <span th:text="${facilitiesData['반려동물_제한사항']}">반려동물 제한사항</span>
-  <br>
-  <span th:text="${facilitiesData['장소_실내_여부']}">장소 실내 여부</span>
-  <br>
-  <span th:text="${facilitiesData['장소_실외_여부']}">장소 실외 여부</span>
-  <br>
-  <span th:text="${facilitiesData['기본_정보_장소설명']}">기본 정보 장소설명</span>
-  <br>
+	<span th:text="${facilitiesData['시설명']}">시설명</span>
+	<br>
+	<i class="fa-solid fa-location-dot" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['도로명주소']}">도로명 주소</span>
+	<br>
+	<span th:text="'(' + ${facilitiesData['지번주소']} + ')'">지번 주소</span>
+	<br>
+	<i class="fa-solid fa-phone" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['전화번호']}">전화번호</span>
+	<br>
+	<i class="fa-regular fa-clock" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['운영시간']}">운영시간</span>
+	<br>
+	<span th:text="${facilitiesData['휴무일']}">휴무일</span>
+	<br>
+	<i class="fa-solid fa-house" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['홈페이지']}">홈페이지</span>
+	<br>
+	<i class="fa-solid fa-car" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['주차_가능여부']}">주차 가능여부</span>
+	<br>
+	<i class="fa-solid fa-wallet" style="color: #bccbe7;">)</i>
+	<span th:text="${facilitiesData['입장_이용료_가격_정보']}">입장(이용료)가격 정보</span>
+	<br>
+	<i class="fa-solid fa-paw" style="color: #bccbe7;"></i>
+	<span th:text="${facilitiesData['애견_동반_추가_요금']}">애견 동반 추가 요금</span>
+	<br>
+	<span th:text="${facilitiesData['반려동물_동반_가능정보']}">반려동물 동반 가능정보</span>
+	<br>
+	<span th:text="${facilitiesData['반려동물_전용_정보']}">반려동물 전용 정보</span>
+	<br>
+	<span th:text="${facilitiesData['입장_가능_동물_크기']}">입장 가능 동물 크기</span>
+	<br>
+	<span th:text="${facilitiesData['반려동물_제한사항']}">반려동물 제한사항</span>
+	<br>
+	<span th:text="${facilitiesData['장소_실내_여부']}">장소 실내 여부</span>
+	<br>
+	<span th:text="${facilitiesData['장소_실외_여부']}">장소 실외 여부</span>
+	<br>
+	<span th:text="${facilitiesData['기본_정보_장소설명']}">기본 정보 장소설명</span>
+	<br>
+	<span id="latitude" th:value="${facilitiesData['위도']}"></span>
+	<span id="longitude" th:value="${facilitiesData['경도']}"></span>
+	<div id="msg"></div>
+	<div id="map" style="width: 350px; height: 350px;"></div>
+	<script>
+		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+		var latitude = parseFloat(document.getElementById('latitude').getAttribute('value'));
+		var longitude = parseFloat(document.getElementById('longitude').getAttribute('value'));
+
+		console.log('lat:', latitude);
+		console.log('lon:', longitude);
+		
+			mapOption = {
+				center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+				level: 3 // 지도의 확대 레벨
+			};
+		
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition  = new kakao.maps.LatLng(latitude, longitude);
+	
+		// 마커를 생성합니다
+		var marker = new kakao.maps.Marker({
+			position: markerPosition
+		});
+	
+		// 마커가 지도 위에 표시되도록 설정합니다
+		marker.setMap(map);
+	</script>
 </body>
 </html>
