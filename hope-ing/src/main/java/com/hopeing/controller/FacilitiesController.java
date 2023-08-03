@@ -134,6 +134,8 @@ public class FacilitiesController {
 			facilitiesVO.set번지((String) facilitiesJson.get("번지"));
 			facilitiesVO.set도로명_이름((String) facilitiesJson.get("도로명 이름"));
 			facilitiesVO.set건물_번호((String) facilitiesJson.get("건물 번호"));
+			facilitiesVO.set위도((String) facilitiesJson.get("위도"));
+			facilitiesVO.set경도((String) facilitiesJson.get("경도"));
 			facilitiesVO.set우편번호((Long) facilitiesJson.get("우편번호"));
 			facilitiesVO.set도로명주소((String) facilitiesJson.get("도로명주소"));
 			facilitiesVO.set지번주소((String) facilitiesJson.get("지번주소"));
