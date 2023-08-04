@@ -1,6 +1,7 @@
 package com.hopeing.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.beans.vo.ReplyVO;
 import com.hopeing.beans.vo.UserVO;
 import com.hopeing.service.ReplyService;
@@ -29,6 +31,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ReplyController {
 	private final ReplyService replyService;
+	
+	// 게시글 댓글 전체 조회
+	@GetMapping("pages/{reply_bno}/{page}")
+	public List<ReplyVO> getList(@PathVariable("reply_bno") Long reply_bno, @PathVariable("page") int page) {
+		Criteria cri = new Criteria(page, 10);
+		
+		return replyService.getList(cri, reply_bno);
+	}
 	
 	// 댓글 삭제
 	@DeleteMapping(value="{reply_no}", produces="text/plain; charset=utf-8")
