@@ -19,7 +19,7 @@ public class FacilitiesVO {
 	private String 건물_번호;
 	private String 위도;
 	private String 경도;
-	private int 우편번호;
+	private Long 우편번호;
 	private String 도로명주소;
 	private String 지번주소;
 	private String 전화번호;
