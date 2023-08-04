@@ -5,13 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.beans.vo.ReplyVO;
 import com.hopeing.mappers.ReplyMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 	@Autowired
 	private ReplyMapper replyMapper;
@@ -37,7 +40,8 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 	
 	// 댓글 목록
-	public List<ReplyVO> getList(Long reply_bno) {
-		return replyMapper.getList(reply_bno);
+	public List<ReplyVO> getList(Criteria cri, Long reply_bno) {
+		cri.setParam();
+		return replyMapper.getList(cri, reply_bno);
 	}
 }

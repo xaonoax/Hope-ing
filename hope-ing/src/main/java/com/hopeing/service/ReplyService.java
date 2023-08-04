@@ -2,6 +2,7 @@ package com.hopeing.service;
 
 import java.util.List;
 
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.beans.vo.ReplyVO;
 
 public interface ReplyService {
@@ -18,5 +19,5 @@ public interface ReplyService {
 	public int register(ReplyVO reply);
 	
 	// 댓글 목록
-	public List<ReplyVO> getList(Long reply_bno);
+	public List<ReplyVO> getList(Criteria cri, Long reply_bno);
 }
