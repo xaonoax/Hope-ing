@@ -1,0 +1,33 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding:0;
+}
+
+table {
+	width: 100%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+	width: 20%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+	width: 20%;
+}
+
+.facilities_logo {
+	font-size: 40px;
+	text-align: center;
+	vertical-align: middle;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.sisul {
+	text-decoration-line: none;
+	text-decoration: none;
+	color: black;
+}

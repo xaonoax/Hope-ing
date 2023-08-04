@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+.facilities_logo {
+	font-size: 40px;
+	text-align: center;
+	vertical-align: middle;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+/* 왼쪽 컨텐츠를 flex: 1로 설정하여 남은 공간 모두 차지하도록 함 */
+#left_facilities_detail_area {
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	float: left;
+	width: 45%; /* 왼쪽 컨텐츠의 폭 설정 */
+	margin-top: 1%;
+	margin-left: 5%;
+	font-size: 15px;
+}
+
+/* 지도를 표시하는 div의 크기를 조정 */
+#map_area {
+	float: right;
+	width: 45%;
+	margin-top: 1%;
+}
+
+#sisul_area {
+	font-size: 25px;
+}
+
+.homepage_address {
+	word-wrap: break-word;
+}

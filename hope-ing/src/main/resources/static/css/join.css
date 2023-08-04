@@ -5,44 +5,91 @@
 	padding:0;
 }
 
+.join_wrap {
+	margin: 30px;
+	margin-bottom: 0.1px;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
+}
+.join_logo {
+	font-size: 40px;
+	margin-top: 1px;
+	margin-bottom: 30px;
+}
+
 /* 중복 아이디 유무 */
 .user_id_input_fail {
-		color: red;
-		display: none;
+	color: red;
+	display: none;
 }
 
 .final_id_ck {
 	display: none;
 }
 
-/* 비밀번호 눈 모양 아이콘 */
 .user_pw_input_box {
-  position: relative;
+	position: relative;
 }
 
+/* 비밀번호 눈 모양 아이콘 */
 .user_pw_eye {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto 2px;
-  height: 30px;
-  font-size: 22px;
-  cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 330px;
+	transform: translateY(-60%);
+	height: 30px;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.user_pw_confirm_input_box {
+	position: relative;	
 }
 
 /* 비밀번호 확인 눈 모양 아이콘 */
-.user_pw_confirm_input_box {
-  position: relative;
+.user_pw_confirm_eye {
+	position: absolute;
+	top: 50%;
+	right: 330px;
+	transform: translateY(-60%);
+	height: 30px;
+	font-size: 22px;
+	cursor: pointer;
 }
 
-.user_pw_confirm_eye {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto 2px;
-  height: 30px;
-  font-size: 22px;
-  cursor: pointer;
+.user_id_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_pw_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_pw_confirm_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_name_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_nickname_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_email_input {
+	width: 40%;
+	height: 40px;
+}
+
+.user_phone_num_input {
+	width: 40%;
+	height: 40px;
 }

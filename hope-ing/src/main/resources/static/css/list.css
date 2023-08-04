@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+.list {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.list tbody tr td a {
+    color: black;
+    text-decoration: none;
+}
+
+.list th,
+.list td {
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	padding: 8px;
+}
+
+.list tr:first-child th {
+    background-color: #9edfbf;
+}
+
+.list th:first-child,
+.list td:first-child {
+	border-left: none;
+	
+}
+
+.list th:last-child,
+.list td:last-child {
+	border-right: none;
+}
+
+.list th:nth-child(1),
+.list td:nth-child(1) {
+	padding-left: 30px;
+	text-align: center;
+}
+
+.list th:nth-child(2) {
+	width: 65%; /* 제목란이 자리를 더 많이 차지하도록 설정 */
+	text-align: center;
+}
+.list td:nth-child(2) {
+	padding-left: 100px;
+}
+
+.list th:nth-child(3),
+.list td:nth-child(3) {
+	text-align: center;
+}
+
+.list th:nth-child(4),
+.list td:nth-child(4) {
+	text-align: center;
+}
+
+.list th:nth-child(5),
+.list td:nth-child(5) {
+	text-align: center;
+}
+
+.list th:nth-child(6),
+.list td:nth-child(6) {
+	text-align: center;
+}
+
+.list_area{
+	margin-top: 100px;
+}
+
+.myPage1_logo{
+	font-size: 40px;
+	margin-bottom: 30px;
+}
+
+#keyword {
+    width: 200px; /* 키워드 입력란의 너비를 조정 */
+}
+
+select[name="type"] {
+    width: 150px; /* 검색 기준 선택란의 너비를 조정 */
+}

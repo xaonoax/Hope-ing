@@ -1,0 +1,52 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding:0;
+}
+
+.mypage1_logo{
+	font-size: 40px;
+	margin-bottom: 30px;
+}
+.mypage_area {
+	margin: 30px;
+	margin-bottom: 0.1px;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
+}
+.user_pw_input {
+	width: 30%;
+	height: 40px;
+}
+
+.user_pw_input_box {
+	position: relative;
+}
+
+/* 비밀번호 눈 모양 아이콘 */
+.user_pw_eye {
+	position: absolute;
+	top: 40%;
+	right: 390px;
+	transform: translateY(-50%);
+	height: 30px;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.user_nickname_input {
+	width: 30%;
+	height: 40px;
+}
+
+.user_email_input {
+	width: 30%;
+	height: 40px;
+}
+
+.user_phone_num_input {
+	width: 30%;
+	height: 40px;
+}

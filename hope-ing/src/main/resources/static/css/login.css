@@ -5,18 +5,102 @@
 	padding:0;
 }
 
-/* 비밀번호 눈 모양 아이콘 */
-.user_pw_input_box {
-  position: relative;
+.login_wrap {
+	margin: 30px;
+	margin-bottom: 0.1px;
+	width: 100%;
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
 }
 
+.login_logo {
+	font-size: 50px;
+	margin-top: 1px;
+	margin-bottom: 30px;
+}
+
+.user_pw_input_box {
+	position: relative;
+}
+
+/* 비밀번호 눈 모양 아이콘 */
 .user_pw_eye {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto 2px;
-  height: 30px;
-  font-size: 22px;
-  cursor: pointer;
+	position: absolute;
+	top: 50%;
+	right: 390px;
+	transform: translateY(-85%);
+	height: 30px;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+.user_id_input {
+	width: 30%;
+	height: 40px;
+}
+
+.user_pw_input {
+	width: 30%;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+#login_button {
+	width: 15%;
+	margin-bottom: 20px;
+}
+
+.signup_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+	font-size: 20px;
+}
+
+.signup_button:before,
+.signup_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 1px;
+	width: 0;
+}
+
+.signup_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+
+.signup_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+  
+.signup_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+
+.signup_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
+
+/* 로그인 실패시 경고글 */
+.login_fail {
+	margin-top: 30px;
+	text-align: center;
+	color : red;
 }

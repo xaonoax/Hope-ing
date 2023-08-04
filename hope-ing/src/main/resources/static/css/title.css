@@ -1,0 +1,333 @@
+@charset "UTF-8";
+
+*{
+	margin: 0;
+	padding:0;
+}
+
+/* 전제 화면 */
+.wrap {
+	width: 1080px;
+	margin: auto;
+}
+
+/* 로고 탭 */
+.logo_area {
+	margin: 30px 10px;
+	margin-bottom: 0.1px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.logo_button {
+	font-size:45px;
+	font-weight:700;
+	letter-spacing:1px;
+	text-transform:uppercase;
+	width:160px;
+	text-align:center;
+	margin:auto;
+	white-space:nowrap;
+	padding-top:13px;
+	padding-bottom:13px;
+	text-decoration-line: none;
+	text-decoration: none;
+	color: black;
+	position: relative;
+}
+
+.logo_button:before {
+	background-color: #9edfbf;
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 5px;
+	width: 75px;
+	margin-bottom: 0.25em;
+}
+
+.logo_button:after {
+	background-color: #9edfbf;
+	content: '';
+	display: block;
+	position:absolute;
+	right:0;
+	bottom:0;
+	height: 5px;
+	width: 75px;
+	margin-bottom: 0.25em;
+}
+
+/* 로그인 탭 */
+.login_area {
+	width: 100%;
+	height: 50px;
+	text-align: right;
+	margin: 0.1px 0.1px;
+}
+
+.login_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	margin-top: 0.1px;
+	font-size: 1.3rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+}
+
+.login_button:before,
+.login_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 1px;
+	width: 0;
+}
+
+.login_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+
+.login_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+  
+.login_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+
+.login_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
+
+/* 메뉴 탭 */
+.menu_area {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #f2f2f2;
+	padding: 3px, 10px;
+	height: 50px;
+}
+
+.menu_area > div {
+	flex-basis: 33.33%;
+	text-align: center;
+}
+
+.menu_area a {
+	display: inline-block;
+	padding: 1rem;
+	text-decoration: none;
+	color: #333;
+}
+
+/* 홈 버튼 */
+.home_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	margin-top: 0.3rem;
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+}
+
+.home_button:before,
+.home_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 3px;
+	width: 0;
+}
+
+.home_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+
+.home_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+
+.home_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+.home_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
+
+/* 커뮤니티 버튼 */
+.community_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	margin-top: 0.3rem;
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+}
+
+.community_button:before,
+.community_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 3px;
+	width: 0;
+}
+
+.community_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+
+.community_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+  
+.community_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+
+.community_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
+
+/* 문화시설 버튼 */
+.facilities_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	margin-top: 0.3rem;
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+}
+
+.facilities_button:before,
+.facilities_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 3px;
+	width: 0;
+}
+
+.facilities_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+
+.facilities_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+  
+.facilities_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+
+.facilities_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
+
+/* 마이페이지 버튼 */
+.mypage_button {
+	display: inline-block;
+	padding: 0.5em 0;
+	border-radius: 0;
+	color: #9edfbf;
+	margin-top: 0.3rem;
+	font-size: 1.2rem;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-decoration: none;
+	position: relative;
+}
+
+.mypage_button:before,
+.mypage_button:after {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 3px;
+	width: 0;
+}
+.mypage_button:before {
+	transition: width 0s ease,background .4s ease;
+	left: 0;
+	right: 0;
+	bottom: 6px;
+}
+.mypage_button:after {
+	right: 2.2%;
+	bottom: 6px;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+  
+.mypage_button:hover:before {
+	width: 97.8%;
+	background: #9edfbf;
+	transition: width .4s ease;
+}
+.mypage_button:after {
+	width: 97.8%;
+	background: 0 0;
+	transition: all 0s ease;
+}
