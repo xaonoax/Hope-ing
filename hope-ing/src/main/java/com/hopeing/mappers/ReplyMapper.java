@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.hopeing.beans.vo.Criteria;
 import com.hopeing.beans.vo.ReplyVO;
 
 @Mapper
@@ -21,5 +22,5 @@ public interface ReplyMapper {
 	public int register(ReplyVO reply);
 	
 	// 댓글 목록
-	public List<ReplyVO> getList(Long reply_bno);
+	public List<ReplyVO> getList(Criteria cri, Long reply_bno);
 }
