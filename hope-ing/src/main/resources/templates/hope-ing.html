@@ -2,6 +2,10 @@
 <html lang="en" xmlns:th="http://www.tymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/main.css" type="text/css">
+<script src="/js/main.js"></script>
 <title>Hope-ing</title>
 </head>
 <body>
@@ -17,14 +21,37 @@
 			</th:block>
 			<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
 			<th:block th:if="${session.user != null}">
-				<a class="logout_button" href="/hope-ing/user/logout">로그아웃</a>
+				<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
 			</th:block>
 		</div>
-		<div class="community_area">
-			<a class="community_button" href="hope-ing/community/list">커뮤니티</a>
+		<div class="menu_area">
+			<div class="home_area">
+				<a class="home_button" href="/hope-ing">홈</a>
+			</div>
+			<div class="community_area">
+				<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+			</div>
+			<div class="facilities_area">
+				<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+			</div>
+			<div class="mypage_area" th:if="${session.user != null}">
+				<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+			</div>
 		</div>
-		<div class="mypage_area" th:if="${session.user != null}">
-			<a class="mypage_button" href="hope-ing/user/mypage">마이페이지</a>
+		<div class="banner_area">
+			<div class="banner_slider">
+				<div class="banner">
+    				<div class="img"><img src="/img/cuteDog.png"></div>
+ 				</div>
+				<div class="banner">
+  					<div class="img"><img src="/img/gogoCat.jpeg"></div>
+				</div>
+				<div class="slider_controls">
+					<button class="prev_button">이전</button>
+					<button class="next_button">다음</button>
+				</div>
+				<div class="indicator"></div>
+			</div>
 		</div>
 	</form>
 </div>
