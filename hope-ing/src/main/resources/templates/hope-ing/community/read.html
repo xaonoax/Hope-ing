@@ -3,28 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
 <link rel="stylesheet" href="/css/read.css">
+<script src="/js/reply.js"></script>
 <title>Hope-ing</title>
 </head>
 <body>
 	<div class="wrap">
-		<form id="boardForm" action="/board/read" method="post">
-			<div class="read_area">
+		<form id="boardForm" action="/hope-ing/community/read" method="post">
+			<div class="logo_area">
+				<a class="logo_button" href="/hope-ing">Hope-ing</a>
+			</div>
+			<div class="login_area">
+				<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+				<th:block th:if="${session.user == null}">
+					<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+				</th:block>
+				<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+				<th:block th:if="${session.user != null}">
+					<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+				</th:block>
+			</div>
+			<div class="menu_area">
+				<div class="home_area">
+					<a class="home_button" href="/hope-ing">홈</a>
+				</div>
+				<div class="community_area">
+					<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+				</div>
+				<div class="facilities_area">
+					<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+				</div>
+				<div class="mypage_area" th:if="${session.user != null}">
+					<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+				</div>
+			</div>
+			<div class="read_detail">
 				<div class="title_area">
        				<span class="title_label"></span>
        				<span class="title_value" th:text="${board.board_title}"></span>
 	    		</div>
-	    		<div class="writer_area">
+	    		<div class="writer_detail">
 	        		<span class="writer_label"></span>
         			<span class="writer_value" th:text="${session.user.user_nickname}"></span>
 	   			</div>
-	   			<div class="date_area">
+	   			<div class="date_detail">
 	        		<span class="date_label"></span>
 	        		<span class="date_value" th:text="${#dates.format(board.board_regdate, 'yyyy-MM-dd HH:mm')}"></span>
     			</div>
     			<label for="photo"></label>
 					<img id="photo" class="photo_area" th:if="${board.board_file_path != null}" th:src="@{${board.board_file_path}}">
-    			<div class="content_area">
+    			<div class="content_detail">
         			<span class="content_label"></span>
         			<span class="content_value" th:text="${board.board_content}"></span>
     			</div>
@@ -90,82 +119,255 @@
 			<!-- dribbble -->
 			<a class="dribbble" href="https://dribbble.com/shots/8082836-Paw-Clap-Button" target="_blank"><img src="https://cdn.dribbble.com/assets/dribbble-ball-mark-2bd45f09c2fb58dbbfb44766d5d1d07c5a12972d602ef8b32204d28fa3dda554.svg" alt=""></a>
 		</div>
+		<hr>
+		<!-- 댓글 목록 -->
+		<div class="reply_logo_area">
+			<div class="reply_logo">댓글</div>
+		</div>
+		<hr>
+		<div class="replies"></div>
+		<div class="reply_input">
+			<textarea class="reply_inputbox" name="reply_content" placeholder="댓글 내용을 작성해주세요. " style="resize: none;"></textarea>
+			<div class="reply_field">
+				<a href="javascript:void(0)" class="button primary small finish">등록</a>
+			</div>
+		</div>
 	</div>
-<script>
-let confettiAmount = 60;
-let confettiColors = [
-	'#7d32f5',
-	'#f6e434',
-	'#63fdf1',
-	'#e672da',
-	'#295dfe',
-	'#6e57ff'
-];
+	<script th:src="@{/js/jquery-3.6.4.js}"></script>
+	<script>
+		$(document).ready(function(){
+			console.log("JS Test");
+			
+			let bnoValue = [[${board.getBoard_no()}]];
+			console.log("bnoValue = " + bnoValue);
+			
+			//console.log(replyService);
+			let replyUL = $(".replies");
+			let pageNum = 1;
+			showList(pageNum);
+			
+			$(".register").on("click", function(e){
+				e.preventDefault();
+				$(".register-form").show();
+				$(this).hide();
+			});
+			
+			$(".cancel").on("click", function(e, f, g){
+				e.preventDefault();
+				$(".register-form").hide();
+				$(".register").show();
+				console.log(f);
+				console.log(g);
+			});
+			
+			$(".finish").on("click", function(e){
+				e.preventDefault();
+				// 댓글 작성자, 댓글 내용
+				let reply_writer_id = $("input[name='reply_writer_id']").val();
+				let reply_content = $("textarea[name='reply_content']").val();
+				console.log("reply_writer_id : " + reply_writer_id);
+				console.log("reply_content : " + reply_content);
+				
+				if(reply_writer_id == "" || reply_content == "") { return; }
+				
+				replyService.add({reply_bno:bnoValue, reply_content:reply_content, reply_writer_id:reply_writer_id},
+					function(result){
+						alert(result);
+						$("input[name='reply_writer_id']").val();
+						$("textarea[name='reply_content']").val("");
+						$(".register-form").hide();
+						$(".register").show();
+						showList(pageNum);
+					}
+				);
+			});
+			
+			$(".replies").on("click", "a.remove", function(e){
+				e.preventDefault();
+				let rnoValue = $(this).attr("href");
+				console.log("rnoValue : " + rnoValue);
+				replyService.remove(rnoValue,
+					function(result){
+						alert(result);
+						showList(pageNum);
+					}
+				);
+			});
+			
+			let check = false;
+			
+			// 수정
+			$(".replies").on("click", "a.modify", function(e){
+				e.preventDefault();
+				if(check){
+					alert("수정 중인 댓글이 있습니다.");
+					return;
+				}
+				
+				// 1. p태그를 textarea로 변경(기존 내용을 textarea로 옮겨야 함)
+				// 2. 수정 완료 버튼
+				
+				let rnoValue = $(this).attr("href");
+				let replyTag = $("#reply_content" + rnoValue);
+				replyTag.html("<textarea style='width: 80%; resize: none' class='" + rnoValue + "'>"
+								+ replyTag.text() + "</textarea>");
+				$(this).hide();
+				
+				let finishes = $(".finish");
+				for(let i=0; i<finishes.length; i++){
+					if($(finishes[i]).attr("href")  == rnoValue){
+						$(finishes[i]).show();
+						check = true;
+						break;
+					}
+				}
+			});
+			
+			// 수정완료
+			$(".replies").on("click", "a.finish", function(e){
+				e.preventDefault();
+				
+				rnoValue = $(this).attr("href");
+				let newReply = $("." + rnoValue).val();
+				
+				if(newReply == ""){ return; }
+				
+				replyService.update({reply_no:rnoValue, reply_content:newReply, reply_writer_id:$("input[name='reply_writer_id']").val()},
+					function(result){
+						alert(result);
+						check = false;
+						showList(pageNum);
+					}	
+				);
+			});
+			
+			let id = $("input[name='reply_writer_id']").val();
+			
+			function showList(page){
+				replyService.getList(
+					{ reply_bno: bnoValue, page : page || 1 },
+					function(list){
+						let str = "";
+						if (list == null || list.length == 0) {
+							replyUL.html("");
+							console.log("No...");
+							return;
+						}
+						console.log("There are some replies");
+						for(let i=0, len=list.length; i<len; i++){
+							console.log(list[i].reply_writer_id);
+							str += "<div style='display:block' data-reply_no='" + list[i].reply_no + "'>";
+							str += "<span class='reply_writer_id'>" + list[i].reply_writer_id + "</span>";
+							str += "<br>"
+							str += "<span class='reply_regdate'>" + formatDate(list[i].reply_regdate) + "</span>";
+							str += "<p id='reply_content" + list[i].reply_no + "'>" + list[i].reply_content + "</p>";
+							if(list[i].reply_writer_id === $("input[name='reply_writer_id']").val()){
+						}
+								str += "<div style='text-align: left;'>";
+							
+							str += "<div style='text-align: right;'>";
+							str += "<a class='modify' href='" + list[i].reply_no + "'>수정</a>";
+							str += "<a class='finish' href='" + list[i].reply_no + "' style='display:none;'>수정완료</a>";
+							str += "&nbsp;&nbsp;";
+							str += "<a class='remove' href='" + list[i].reply_no + "'>삭제</a>";
+							str += "</div>";
+							}
+							str += "<div class='line'></div>";
+							str += "<hr class='reply-line'>";  // 수평 선 추가
+							str += "</div>";
+						replyUL.html(str);
+					}
+				);
+			}
+			
+			// 날짜 형식 변환 함수 추가
+			function formatDate(dateStr) {
+				const date = new Date(dateStr);
+				const year = date.getFullYear();
+				const month = String(date.getMonth() + 1).padStart(2, "0");
+				const day = String(date.getDate()).padStart(2, "0");
+				const hours = String(date.getHours()).padStart(2, "0");
+				const minutes = String(date.getMinutes()).padStart(2, "0");
+				
+				return `${year}-${month}-${day} ${hours}:${minutes}`;
+			}
+		});
+	</script>
+	<script>
+		let confettiAmount = 60;
+		let confettiColors = [
+			'#7d32f5',
+			'#f6e434',
+			'#63fdf1',
+			'#e672da',
+			'#295dfe',
+			'#6e57ff'
+		];
 
-let random = (min, max) => {
-	return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-let createConfetti = to => {
-	let elem = document.createElement('i');
-	let set = Math.random() < 0.5 ? -1 : 1;
-	elem.style.setProperty('--x', random(-260, 260) + 'px');
-	elem.style.setProperty('--y', random(-160, 160) + 'px');
-	elem.style.setProperty('--r', random(0, 360) + 'deg');
-	elem.style.setProperty('--s', random(0.6, 1));
-	elem.style.setProperty('--b', confettiColors[random(0, 5)]);
-	to.appendChild(elem);
-};
-
-document.querySelectorAll('.paw-button').forEach(elem => {
-	elem.addEventListener('click', e => {
-		e.preventDefault();
-		let number = elem.children[1].textContent;
-		let board_no = document.querySelector('#board_no').value;
-		let user_id = document.querySelector('#user_id').value;
-
-	if (!elem.classList.contains('animation')) {
-		elem.classList.add('animation');
-		for (let i = 0; i < confettiAmount; i++) {
-			createConfetti(elem);
-		}
-		setTimeout(() => {
-			elem.classList.add('confetti');
-				setTimeout(() => {
-					elem.classList.add('liked');
-					elem.children[1].textContent = parseInt(number) + 1;
-			}, 400);
-				setTimeout(() => {
-				elem.querySelectorAll('i').forEach(i => i.remove());
-			}, 600);
+		let random = (min, max) => {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		};
 		
-			// 좋아요 요청
-			fetch('/hope-ing/community/likes/' + board_no + '?user_id=' + user_id, {
-				method: 'POST',
-			})
-				.then(response => {
-					if (response.ok) {
-						return response.text();
-					}
-					else {
-						console.error('Error:', response.status);
-					}
-				})
-				.then(redirectUrl => {
-					// 리다이렉트
-					window.location.href = redirectUrl;
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-			}, 260);
-		}
-		else {
-			elem.classList.remove('animation', 'liked', 'confetti');
-			elem.children[1].textContent = parseInt(number) - 1;
-		}
-	});
-});
-</script>
+		let createConfetti = to => {
+			let elem = document.createElement('i');
+			let set = Math.random() < 0.5 ? -1 : 1;
+			elem.style.setProperty('--x', random(-260, 260) + 'px');
+			elem.style.setProperty('--y', random(-160, 160) + 'px');
+			elem.style.setProperty('--r', random(0, 360) + 'deg');
+			elem.style.setProperty('--s', random(0.6, 1));
+			elem.style.setProperty('--b', confettiColors[random(0, 5)]);
+			to.appendChild(elem);
+		};
+		
+		document.querySelectorAll('.paw-button').forEach(elem => {
+			elem.addEventListener('click', e => {
+				e.preventDefault();
+				let number = elem.children[1].textContent;
+				let board_no = document.querySelector('#board_no').value;
+				let user_id = document.querySelector('#user_id').value;
+		
+			if (!elem.classList.contains('animation')) {
+				elem.classList.add('animation');
+				for (let i = 0; i < confettiAmount; i++) {
+					createConfetti(elem);
+				}
+				setTimeout(() => {
+					elem.classList.add('confetti');
+						setTimeout(() => {
+							elem.classList.add('liked');
+							elem.children[1].textContent = parseInt(number) + 1;
+					}, 400);
+						setTimeout(() => {
+						elem.querySelectorAll('i').forEach(i => i.remove());
+					}, 600);
+				
+					// 좋아요 요청
+					fetch('/hope-ing/community/likes/' + board_no + '?user_id=' + user_id, {
+						method: 'POST',
+					})
+						.then(response => {
+							if (response.ok) {
+								return response.text();
+							}
+							else {
+								console.error('Error:', response.status);
+							}
+						})
+						.then(redirectUrl => {
+							// 리다이렉트
+							window.location.href = redirectUrl;
+						})
+						.catch(error => {
+							console.error('Error:', error);
+						});
+					}, 260);
+				}
+				else {
+					elem.classList.remove('animation', 'liked', 'confetti');
+					elem.children[1].textContent = parseInt(number) - 1;
+				}
+			});
+		});
+	</script>
 </body>
 </html>

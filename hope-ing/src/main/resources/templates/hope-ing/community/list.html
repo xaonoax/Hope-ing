@@ -3,11 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/list.css" type="text/css">
 <title>Hope-ing</title>
 </head>
 <body>
 	<div class="wrap">
 		<form method="post" id="listForm">
+			<div class="logo_area">
+				<a class="logo_button" href="/hope-ing">Hope-ing</a>
+			</div>
+			<div class="login_area">
+				<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+				<th:block th:if="${session.user == null}">
+					<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+				</th:block>
+				<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+				<th:block th:if="${session.user != null}">
+					<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+				</th:block>
+			</div>
+			<div class="menu_area">
+				<div class="home_area">
+					<a class="home_button" href="/hope-ing">홈</a>
+				</div>
+				<div class="community_area">
+					<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+				</div>
+				<div class="facilities_area">
+					<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+				</div>
+				<div class="mypage_area" th:if="${session.user != null}">
+					<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+				</div>
+			</div>
 			<div class="list_area">
 				<table class="list">
 					<tr>
@@ -23,7 +52,7 @@
 						<tr th:each="board : ${list}">
 							<td th:text="${board.board_no}"></td>
 							<td><a th:href="@{/hope-ing/community/read(board_no=${board.board_no})}" th:text="${board.board_title}"></a></td>
-							<td th:text="${session.user.user_id}"></td>
+							<td th:text="${board.board_writer_id}"></td>
 							<td th:text="${#dates.format(board.board_regdate, 'yyyy-MM-dd')}"></td>
 							<td th:text="${board.board_views}"></td>
 							<td th:text="${board.board_like_count}"></td>
