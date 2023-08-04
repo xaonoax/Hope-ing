@@ -25,11 +25,10 @@
 	</insert>
 	<!-- 댓글 목록 -->
 	<select id="getList" resultType="replyVO">
-		<![CDATA[
-		SELECT REPLY_NO, REPLY_BNO, REPLY_CONTENT, REPLY_WRITER_ID, REPLYDATE, UPDATEDATE
+		SELECT REPLY_NO, REPLY_BNO, REPLY_CONTENT, REPLY_WRITER_ID, REPLY_REGDATE, REPLY_UPDATEDATE
 		FROM TBL_REPLY a
-		WHERE REPLY_BNO > 0
-		ORDER BY REPLY_NO DESC
-		]]>
+		WHERE REPLY_BNO = #{reply_bno}
+		ORDER BY REPLY_NO ASC
+		LIMIT #{cri.limit} OFFSET #{cri.offset}
 	</select>
 </mapper>
