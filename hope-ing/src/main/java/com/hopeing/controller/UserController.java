@@ -52,14 +52,13 @@ public class UserController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		if (user == null) {
-			return "redirect:hope-ing/user/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+			return "redirect:/hope-ing/user/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 		}
 		else {
 			model.addAttribute("user", user); // 회원 정보를 모델에 추가
 			
 			// 작성자 input 요소에 로그인 사용자의 닉네임 설정
-			model.addAttribute("user_id", user.getUser_id());
-			return "hope-ing/user/myPage"; // 마이 페이지 템플릿으로 이동
+			return "/hope-ing/user/myPage"; // 마이 페이지 템플릿으로 이동
 	    }
 	}
 	
@@ -71,7 +70,7 @@ public class UserController {
 		UserVO loginUser = (UserVO) session.getAttribute("user");
 		
 		if (loginUser == null) {
-			return new RedirectView("hope-ing/user/login"); // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
+			return new RedirectView("/hope-ing/user/login"); // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 		}
 		else {
 			user.setUser_id(loginUser.getUser_id()); // 로그인된 사용자의 ID로 설정
@@ -80,6 +79,10 @@ public class UserController {
 			
 			if (result > 0) {
 				loginUser.setUser_id(user.getUser_id());
+				loginUser.setUser_pw(user.getUser_pw());
+				loginUser.setUser_nickname(user.getUser_nickname());
+				loginUser.setUser_email(user.getUser_email());
+				loginUser.setUser_phone_num(user.getUser_phone_num());
 				
 				session.setAttribute("user", loginUser);
 				rttr.addFlashAttribute("successMessage", "정보 수정이 완료되었습니다.");
@@ -88,7 +91,7 @@ public class UserController {
 				rttr.addFlashAttribute("errorMessage", "정보 수정에 실패했습니다.");
 			}
 
-	        return new RedirectView("mypage?id=" + loginUser.getUser_id());
+	        return new RedirectView("/hope-ing/user/mypage?id=" + loginUser.getUser_id());
 	    }
 	}
 	
