@@ -3,48 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/mypage.css" type="text/css">
 <script 개인 폰트어썸 kit></script>
 <title>Hope-ing</title>
 </head>
 <body>
 <div class="wrap">
-	<form method="post" id="mypageForm" th:object="${user}">
-		<div class="user_pw" style="text-align: center;">
-			<div class="user_pw_input_box">
-				<input class="user_pw_input" type="password" name="user_pw" placeholder="비밀번호">
-				<div class="user_pw_eye">
-					<i class="fa-solid fa-eye fa-sm"></i>
+	<form method="post">
+		<div class="logo_area">
+			<a class="logo_button" href="/hope-ing">Hope-ing</a>
+		</div>
+		<div class="login_area">
+			<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+			<th:block th:if="${session.user == null}">
+				<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+			</th:block>
+			<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+			<th:block th:if="${session.user != null}">
+				<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+			</th:block>
+		</div>
+		<div class="menu_area">
+			<div class="home_area">
+				<a class="home_button" href="/hope-ing">홈</a>
+			</div>
+			<div class="community_area">
+				<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+			</div>
+			<div class="facilities_area">
+				<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+			</div>
+			<div class="mypage_area" th:if="${session.user != null}">
+				<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+			</div>
+		</div>
+	</form>
+	<form method="post" id="mypageForm" action="/hope-ing/user/mypage" th:object="${user}">
+		<div class="mypage_area">
+			<div class="mypage1_logo">개인정보관리</div>
+			<div class="user_pw" style="text-align: center;">
+				<div class="user_pw_input_box">
+					<input class="user_pw_input" type="password" name="user_pw" placeholder="비밀번호" th:value="${session.user.user_pw}">
+					<div class="user_pw_eye">
+						<i class="fa-solid fa-eye fa-sm"></i>
+					</div>
+					<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
 				</div>
-				<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
 			</div>
-		</div>
-		<br>
-		<div class="user_nickname" style="text-align: center;">
-			<div class="user_nickname_input_box">
-				<input class="user_nickname_input" name="user_nickname" th:value="${session.user.user_nickname}">
-				<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
+			<br>
+			<div class="user_nickname" style="text-align: center;">
+				<div class="user_nickname_input_box">
+					<input class="user_nickname_input" name="user_nickname" placeholder="닉네임" th:value="${session.user.user_nickname}">
+					<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
+				</div>
 			</div>
-		</div>
-		<br>
-		<div class="user_email" style="text-align: center;">
-			<div class="user_email_input_box">
-				<input class="user_email_input" name="user_email" th:value="${session.user.user_email}">
-				<span class="user_email_warning" style="display: none; color: red;">유효한 이메일 주소를 입력해주세요.</span>
+			<br>
+			<div class="user_email" style="text-align: center;">
+				<div class="user_email_input_box">
+					<input class="user_email_input" name="user_email" th:value="${session.user.user_email}">
+					<span class="user_email_warning" style="display: none; color: red;">유효한 이메일 주소를 입력해주세요.</span>
+				</div>
 			</div>
-		</div>
-		<br>
-		<div class="user_phone_num" style="text-align: center;">
-			<div class="user_phone_num_input_box">
-				<input class="user_phone_num_input" type="text" name="user_phone_num" th:value="${session.user.user_phone_num}">
-				<span class="user_phone_num_warning" style="display: none; color: red;">전화번호 형식에 맞게 입력해주세요. (예: 01012345678)</span>
+			<br>
+			<div class="user_phone_num" style="text-align: center;">
+				<div class="user_phone_num_input_box">
+					<input class="user_phone_num_input" name="user_phone_num" th:value="${session.user.user_phone_num}">
+					<span class="user_phone_num_warning" style="display: none; color: red;">전화번호 형식에 맞게 입력해주세요. (예: 01012345678)</span>
+				</div>
 			</div>
-		</div>
-				<br>
-		<div class="user_update_button_wrap">
-			<button id="user_update_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">수정하기</button>
-		</div>
-		<div class="user_delete_button_wrap">
-			<button id="user_delete_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">회원탈퇴</button>
+					<br>
+			<div class="user_update_button_wrap">
+				<button id="user_update_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">수정하기</button>
+			</div>
+			<br>
+			<div class="user_delete_button_wrap">
+				<button id="user_delete_button" type="submit" class="btn btn-lg" style="background-color: #f7cdd1;">회원탈퇴</button>
+			</div>
 		</div>
 	</form>
 </div>
@@ -104,7 +139,6 @@
 	}
 	
 	$(document).ready(function(){
-		//회원가입 버튼(회원가입 기능 작동)
 		$("#user_update_button").click(function(e){
 			e.preventDefault();
 			

@@ -3,33 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="/css/login.css">
-<script 개인 폰트어썸 kit></script>
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/login.css" type="text/css">
+<script 개인 폰트어썸 kit></script>ript>
 <title>Hope-ing</title>
 </head>
 <body>
 <div class="wrap">
 	<form method="post" id="loginForm">
-		<div class="user_id" style="text-align: center;">
-			<div class="user_id_input_box">
-				<input class="user_id_input" name="user_id" placeholder="아이디">
+		<div class="logo_area">
+			<a class="logo_button" href="/hope-ing">Hope-ing</a>
+		</div>
+		<div class="login_area">
+			<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+			<th:block th:if="${session.user == null}">
+				<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+			</th:block>
+			<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+			<th:block th:if="${session.user != null}">
+				<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+			</th:block>
+		</div>
+		<div class="menu_area">
+			<div class="home_area">
+				<a class="home_button" href="/hope-ing">홈</a>
+			</div>
+			<div class="community_area">
+				<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+			</div>
+			<div class="facilities_area">
+				<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+			</div>
+			<div class="mypage_area" th:if="${session.user != null}">
+				<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
 			</div>
 		</div>
-		<br>
-		<div class="user_pw" style="text-align: center;">
-			<div class="user_pw_input_box">
-				<input class="user_pw_input" type="password" name="user_pw" placeholder="비밀번호">
-				<div class="user_pw_eye">
-					<i class="fa-solid fa-eye fa-sm"></i>
+		<div class="login_wrap">
+			<div class="login_logo">
+				로그인
+			</div>
+			<div class="user_id" style="text-align: center;">
+				<div class="user_id_input_box">
+					<input class="user_id_input" name="user_id" placeholder="아이디">
 				</div>
 			</div>
-		</div>
-		<div class="login_button_wrap">
-			<button id="login_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">로그인</button>
-		</div>
-		<hr>
-		<div class="signup_button_wrap">
-			<a class="signup_button" href="/hope-ing/user/join">회원가입</a>
+			<br>
+			<div class="user_pw" style="text-align: center;">
+				<div class="user_pw_input_box">
+					<input class="user_pw_input" type="password" name="user_pw" placeholder="비밀번호">
+					<div class="user_pw_eye">
+						<i class="fa-solid fa-eye fa-sm"></i>
+					</div>
+				</div>
+			</div>
+			<div class="login_button_wrap">
+				<button id="login_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">로그인</button>
+			</div>
+			<hr>
+			<div class="signup_button_wrap">
+				<a class="signup_button" href="/hope-ing/user/join">회원가입</a>
+			</div>
 		</div>
 	</form>
 </div>

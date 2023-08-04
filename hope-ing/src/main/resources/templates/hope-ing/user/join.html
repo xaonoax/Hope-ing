@@ -3,75 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
-<link rel="stylesheet" href="/css/join.css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/join.css" type="text/css">
 <script 개인 폰트어썸 kit></script>
 <title>Hope-ing</title>
 </head>
 <body>
-<div class="wrap">
-	<form method="post" id="joinForm">
-		<div class="user_id" style="text-align: center;">
-			<div class="user_id_input_box">
-				<input class="user_id_input" name="user_id" placeholder="아이디(5~20자의 영문 소문자, 숫자, 특수기호(_))">
+	<div class="wrap">
+		<form method="post" id="joinForm">
+			<div class="logo_area">
+				<a class="logo_button" href="/hope-ing">Hope-ing</a>
 			</div>
-				<span class="user_id_input_fail">사용 중인 아이디입니다.</span>
-				<span class="final_id_ck"></span>
-				<span class="user_id_warning" style="display: none; color: red;">잘못된 형식의 아이디입니다.</span>
-		</div>
-		<br>
-		<div class="user_pw" style="text-align: center;">
-			<div class="user_pw_input_box">
-				<input class="user_pw_input" id="user_pw" name="user_pw" type="password" placeholder="비밀번호(8~20자의 영문 대/소문자, 숫자, 특수문자)">
-				<div class="user_pw_eye">
-					<i class="fa-solid fa-eye fa-sm"></i>
+			<div class="login_area">
+				<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+				<th:block th:if="${session.user == null}">
+					<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+				</th:block>
+				<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+				<th:block th:if="${session.user != null}">
+					<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+				</th:block>
+			</div>
+			<div class="menu_area">
+				<div class="home_area">
+					<a class="home_button" href="/hope-ing">홈</a>
 				</div>
-				<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
-			</div>
-		</div>
-		<br>
-		<div class="user_pw_confirm" style="text-align: center;">
-			<div class="user_pw_confirm_input_box">
-				<input class="user_pw_confirm_input" name="user_pw_confirm" placeholder="비밀번호 확인">
-				<div class="user_pw_confirm_eye">
-					<i class="fa-solid fa-eye fa-sm"></i>
+				<div class="community_area">
+					<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
 				</div>
-				<span class="user_pw_confirm_warning" style="display: none; color: red;">비밀번호가 일치하지 않습니다.</span>
+				<div class="facilities_area">
+					<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+				</div>
+				<div class="mypage_area" th:if="${session.user != null}">
+					<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+				</div>
 			</div>
-		</div>
-		<br>
-		<div class="user_name" style="text-align: center;">
-			<div class="user_name_input_box">
-				<input class="user_name_input" name="user_name" placeholder="이름">
-				<span class="user_name_warning" style="display: none; color: red;">이름은 한글로 최소 2자 이상 입력해주세요.</span>
+			<div class="join_wrap">
+				<div class="join_logo">
+						회원가입
+				</div>
+				<div class="user_id" style="text-align: center;">
+					<div class="user_id_input_box">
+						<input class="user_id_input" name="user_id" placeholder="아이디(5~20자의 영문 소문자, 숫자, 특수기호(_))">
+					</div>
+						<span class="user_id_input_fail">사용 중인 아이디입니다.</span>
+						<span class="final_id_ck"></span>
+						<span class="user_id_warning" style="display: none; color: red;">잘못된 형식의 아이디입니다.</span>
+				</div>
+				<br>
+				<div class="user_pw" style="text-align: center;">
+					<div class="user_pw_input_box">
+						<input class="user_pw_input" id="user_pw" name="user_pw" type="password" placeholder="비밀번호(8~20자의 영문 대/소문자, 숫자, 특수문자)">
+						<div class="user_pw_eye">
+							<i class="fa-solid fa-eye fa-sm"></i>
+						</div>
+						<span class="user_pw_warning" style="display: none; color: red;">잘못된 형식의 비밀번호입니다.</span>
+					</div>
+				</div>
+				<br>
+				<div class="user_pw_confirm" style="text-align: center;">
+					<div class="user_pw_confirm_input_box">
+						<input class="user_pw_confirm_input" name="user_pw_confirm" placeholder="비밀번호 확인">
+						<div class="user_pw_confirm_eye">
+							<i class="fa-solid fa-eye fa-sm"></i>
+						</div>
+						<span class="user_pw_confirm_warning" style="display: none; color: red;">비밀번호가 일치하지 않습니다.</span>
+					</div>
+				</div>
+				<br>
+				<div class="user_name" style="text-align: center;">
+					<div class="user_name_input_box">
+						<input class="user_name_input" name="user_name" placeholder="이름">
+						<span class="user_name_warning" style="display: none; color: red;">이름은 한글로 최소 2자 이상 입력해주세요.</span>
+					</div>
+				</div>
+				<br>
+				<div class="user_nickname" style="text-align: center;">
+					<div class="user_nickname_input_box">
+						<input class="user_nickname_input" name="user_nickname" placeholder="닉네임(2~20자의 영문 소문자, 한글, 숫자, 특수기호(_)" >
+						<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
+					</div>
+				</div>
+				<br>
+				<div class="user_email" style="text-align: center;">
+					<div class="user_email_input_box">
+						<input class="user_email_input" name="user_email" placeholder="이메일">
+						<span class="user_email_warning" style="display: none; color: red;">유효한 이메일 주소를 입력해주세요.</span>
+					</div>
+				</div>
+				<br>
+				<div class="user_phone_num" style="text-align: center;">
+					<div class="user_phone_num_input_box">
+						<input class="user_phone_num_input" name="user_phone_num" placeholder="전화번호(- 제외)">
+						<span class="user_phone_num_warning" style="display: none; color: red;">전화번호 형식에 맞게 입력해주세요. (예: 01012345678)</span>
+					</div>
+				</div>
+				<br>
+				<div class="join_button_wrap" style="text-align: center;">
+					<button id="join_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">가입하기</button>
+				</div>
 			</div>
-		</div>
-		<br>
-		<div class="user_nickname" style="text-align: center;">
-			<div class="user_nickname_input_box">
-				<input class="user_nickname_input" name="user_nickname" placeholder="닉네임(2~20자의 영문 소문자, 한글, 숫자, 특수기호(_)" >
-				<span class="user_nickname_warning" style="display: none; color: red;">잘못된 형식의 닉네입니다.</span>
-			</div>
-		</div>
-		<br>
-		<div class="user_email" style="text-align: center;">
-			<div class="user_email_input_box">
-				<input class="user_email_input" name="user_email" placeholder="이메일">
-				<span class="user_email_warning" style="display: none; color: red;">유효한 이메일 주소를 입력해주세요.</span>
-			</div>
-		</div>
-		<br>
-		<div class="user_phone_num" style="text-align: center;">
-			<div class="user_phone_num_input_box">
-				<input class="user_phone_num_input" name="user_phone_num" placeholder="전화번호(- 제외)">
-				<span class="user_phone_num_warning" style="display: none; color: red;">전화번호 형식에 맞게 입력해주세요. (예: 01012345678)</span>
-			</div>
-		</div>
-		<br>
-		<div class="join_button_wrap" style="text-align: center;">
-			<button id="join_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">가입하기</button>
-		</div>
-	</form>
-</div>
+		</form>
+	</div>
 <script th:src="@{/js/jquery-3.6.4.js}"></script>
 <script>
 	// 비밀번호 확인 눈 모양 아이콘
