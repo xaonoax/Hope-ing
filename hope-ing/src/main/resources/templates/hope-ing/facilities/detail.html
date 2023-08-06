@@ -3,57 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/detail.css">
 <script 개인 폰트어썸 kit></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 javascript 키"></script>
+<script 개인 카카오 맵 js key></script>
 <title>Hope-ing</title>
 </head>
 <body>
-<h1>시설 상세 정보</h1>
-	<span th:text="${facilitiesData['시설명']}">시설명</span>
-	<br>
-	<i class="fa-solid fa-location-dot" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['도로명주소']}">도로명 주소</span>
-	<br>
-	<span th:text="'(' + ${facilitiesData['지번주소']} + ')'">지번 주소</span>
-	<br>
-	<i class="fa-solid fa-phone" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['전화번호']}">전화번호</span>
-	<br>
-	<i class="fa-regular fa-clock" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['운영시간']}">운영시간</span>
-	<br>
-	<span th:text="${facilitiesData['휴무일']}">휴무일</span>
-	<br>
-	<i class="fa-solid fa-house" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['홈페이지']}">홈페이지</span>
-	<br>
-	<i class="fa-solid fa-car" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['주차_가능여부']}">주차 가능여부</span>
-	<br>
-	<i class="fa-solid fa-wallet" style="color: #bccbe7;">)</i>
-	<span th:text="${facilitiesData['입장_이용료_가격_정보']}">입장(이용료)가격 정보</span>
-	<br>
-	<i class="fa-solid fa-paw" style="color: #bccbe7;"></i>
-	<span th:text="${facilitiesData['애견_동반_추가_요금']}">애견 동반 추가 요금</span>
-	<br>
-	<span th:text="${facilitiesData['반려동물_동반_가능정보']}">반려동물 동반 가능정보</span>
-	<br>
-	<span th:text="${facilitiesData['반려동물_전용_정보']}">반려동물 전용 정보</span>
-	<br>
-	<span th:text="${facilitiesData['입장_가능_동물_크기']}">입장 가능 동물 크기</span>
-	<br>
-	<span th:text="${facilitiesData['반려동물_제한사항']}">반려동물 제한사항</span>
-	<br>
-	<span th:text="${facilitiesData['장소_실내_여부']}">장소 실내 여부</span>
-	<br>
-	<span th:text="${facilitiesData['장소_실외_여부']}">장소 실외 여부</span>
-	<br>
-	<span th:text="${facilitiesData['기본_정보_장소설명']}">기본 정보 장소설명</span>
-	<br>
-	<span id="latitude" th:value="${facilitiesData['위도']}"></span>
-	<span id="longitude" th:value="${facilitiesData['경도']}"></span>
-	<div id="msg"></div>
-	<div id="map" style="width: 350px; height: 350px;"></div>
+	<div class="wrap">
+		<form method="post" id="facilitiesForm">
+			<div class="logo_area">
+				<a class="logo_button" href="/hope-ing">Hope-ing</a>
+			</div>
+			<div class="login_area">
+				<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+				<th:block th:if="${session.user == null}">
+					<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+				</th:block>
+				<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+				<th:block th:if="${session.user != null}">
+					<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+				</th:block>
+			</div>
+			<div class="menu_area">
+				<div class="home_area">
+					<a class="home_button" href="/hope-ing">홈</a>
+				</div>
+				<div class="community_area">
+					<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+				</div>
+				<div class="facilities_area">
+					<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+				</div>
+				<div class="mypage_area" th:if="${session.user != null}">
+					<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+				</div>
+			</div>
+			<div class="facilities_logo">
+				시설 상세 정보
+			</div>
+			<hr>
+			<div id="facilities_detail_area">
+				<div id="left_facilities_detail_area">
+					<div id="sisul_area">
+						<span th:text="${facilitiesData['시설명']}">시설명</span>
+					</div>
+					<hr>
+					<i class="fa-solid fa-location-dot" style="color: #bccbe7;"></i>
+					<br>
+					<span th:text="${facilitiesData['도로명주소']}">도로명 주소</span>
+					<br>
+					<span th:text="'(' + ${facilitiesData['지번주소']} + ')'">지번 주소</span>
+					<hr>
+					<i class="fa-solid fa-phone" style="color: #bccbe7;"></i>
+					<br>
+					<span th:text="${facilitiesData['전화번호']}">전화번호</span>
+					<hr>
+					<i class="fa-regular fa-clock" style="color: #bccbe7;"></i>
+					<br>
+					<span th:text="${facilitiesData['운영시간']}">운영시간</span>
+					<br>
+					<span th:text="${facilitiesData['휴무일']}">휴무일</span>
+					<hr>
+					<i class="fa-solid fa-house" style="color: #bccbe7;"></i>
+					<br>
+					<span class="homepage_address" th:text="${facilitiesData['홈페이지']}">홈페이지</span>
+					<hr>
+					<i class="fa-solid fa-car" style="color: #bccbe7;"></i>
+					<br>
+					<span th:text="${facilitiesData['주차_가능여부']}">주차 가능여부</span>
+					<hr>
+					<i class="fa-solid fa-wallet" style="color: #bccbe7;">)</i>
+					<br>
+					<span>입장(이용료)가격 : </span>
+					<span th:text="${facilitiesData['입장_이용료_가격_정보']}">입장(이용료)가격 정보</span>
+					<br>
+					<span>반려동물 동반 추가 요금 : </span>
+					<span th:text="${facilitiesData['애견_동반_추가_요금']}">애견 동반 추가 요금</span>
+					<hr>
+					<i class="fa-solid fa-paw" style="color: #bccbe7;"></i>
+					<br>
+					<span>반려동물 </span>
+					<span th:text="${facilitiesData['반려동물_동반_가능정보']}">반려동물 동반 가능정보</span>
+					<br>
+					<span>입장 가능 반려동물 크기 : </span>
+					<span th:text="${facilitiesData['입장_가능_동물_크기']}">입장 가능 동물 크기</span>
+					<br>
+					<span>제한사항 : </span>
+					<span th:text="${facilitiesData['반려동물_제한사항']}">반려동물 제한사항</span>
+					<br>
+					<span>반려동물 전용 정보 : </span>
+					<span th:text="${facilitiesData['반려동물_전용_정보']}">반려동물 전용 정보</span>
+					<br>
+					<span th:text="${facilitiesData['장소_실내_여부']}">장소 실내 여부</span>
+					<br>
+					<span th:text="${facilitiesData['기본_정보_장소설명']}">기본 정보 장소설명</span>
+					<br>
+				</div>
+			</div>
+			<div id="map_area">
+				<span id="latitude" th:value="${facilitiesData['위도']}"></span>
+				<span id="longitude" th:value="${facilitiesData['경도']}"></span>
+				<div id="map" style="width: 450px; height: 450px;"></div>
+			</div>
+		</form>
+	</div>
 	<script>
 		var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 		var latitude = parseFloat(document.getElementById('latitude').getAttribute('value'));
