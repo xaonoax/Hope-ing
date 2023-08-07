@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="/css/title.css" type="text/css">
 <link rel="stylesheet" href="/css/detail.css">
 <script 개인 폰트어썸 kit></script>
-<script 개인 카카오 맵 js key></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=발급받은 javascript 키"></script>
 <title>Hope-ing</title>
 </head>
 <body>
@@ -67,13 +67,13 @@
 					<hr>
 					<i class="fa-solid fa-house" style="color: #bccbe7;"></i>
 					<br>
-					<span class="homepage_address" th:text="${facilitiesData['홈페이지']}">홈페이지</span>
+					<a class="homepage_address" th:href="${facilitiesData['홈페이지']}" th:text="${facilitiesData['홈페이지']}">홈페이지</a>
 					<hr>
 					<i class="fa-solid fa-car" style="color: #bccbe7;"></i>
 					<br>
 					<span th:text="${facilitiesData['주차_가능여부']}">주차 가능여부</span>
 					<hr>
-					<i class="fa-solid fa-wallet" style="color: #bccbe7;">)</i>
+					<i class="fa-solid fa-wallet" style="color: #bccbe7;"></i>
 					<br>
 					<span>입장(이용료)가격 : </span>
 					<span th:text="${facilitiesData['입장_이용료_가격_정보']}">입장(이용료)가격 정보</span>
