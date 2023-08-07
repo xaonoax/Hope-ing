@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap/bootstrap.css" type="text/css">
+<link rel="stylesheet" href="/css/title.css" type="text/css">
+<link rel="stylesheet" href="/css/facilities_list.css" type="text/css">
+<title>Hope-ing</title>
+</head>
+<body>
+	<div class="wrap">
+		<form method="get" action="/hope-ing/facilities/facilities_list" id="facilitiesForm">
+			<div class="logo_area">
+				<a class="logo_button" href="/hope-ing">Hope-ing</a>
+			</div>
+			<div class="login_area">
+				<!-- 세션에 사용자 정보가 없으면 로그인 버튼 표시 -->
+				<th:block th:if="${session.user == null}">
+					<a class="login_button" href="/hope-ing/user/login">로그인 / 회원가입</a>
+				</th:block>
+				<!-- 세션에 사용자 정보가 있으면 로그아웃 버튼 표시 -->
+				<th:block th:if="${session.user != null}">
+					<a class="login_button" href="/hope-ing/user/logout">로그아웃</a>
+				</th:block>
+			</div>
+			<div class="menu_area">
+				<div class="home_area">
+					<a class="home_button" href="/hope-ing">홈</a>
+				</div>
+				<div class="community_area">
+					<a class="community_button" href="/hope-ing/community/list">커뮤니티</a>
+				</div>
+				<div class="facilities_area">
+					<a class="facilities_button" href="/hope-ing/facilities/facilities_list">문화시설</a>
+				</div>
+				<div class="mypage_area" th:if="${session.user != null}">
+					<a class="mypage_button" href="/hope-ing/user/mypage">마이페이지</a>
+				</div>
+			</div>
+			<div class="facilities_logo">
+				반려동물 문화 시설 정보
+				<p>검색어: <span th:text="${searchKeyword}"></span></p>
+			</div>
+			<hr>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>시설명</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="facilities : ${searchResults}">
+		                <td>
+							<a class="sisul" th:href="@{|/hope-ing/facilities/detail?시설명=${facilities['시설명']}|}" th:text="${facilities['시설명']}">시설명</a>
+						</td>
+						<td th:text="${facilities['카테고리2']}">카테고리2</td>
+						<td>
+							<span th:text="${facilities['시도_명칭']}">시도 명칭</span>
+							<span th:text="${facilities['시군구_명칭']}">시군구 명칭</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="currentPage">
+				<a th:href="@{|/hope-ing/facilities/facilities_search?searchKeyword=${searchKeyword}&page=${currentPage - 1}|}" th:if="${currentPage > 1}">이전</a>
+				<span th:text="${currentPage}"></span>
+				<a th:href="@{/hope-ing/facilities/facilities_search(searchKeyword=${searchKeyword},page=${currentPage + 1})}">다음</a>
+			</div>
+		</form>
+		<div class="search_area">
+			<form th:action="@{/hope-ing/facilities/facilities_search}" method="get">
+				<input type="text" name="searchKeyword" placeholder="시설명을 입력하세요.">
+				<button id="search_button" type="submit" class="btn btn-lg" style="background-color: #9edfbf;">검색</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
