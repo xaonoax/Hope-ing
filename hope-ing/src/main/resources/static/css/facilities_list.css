@@ -31,3 +31,21 @@ td:nth-child(3) {
 	text-decoration: none;
 	color: black;
 }
+
+.currentPage {
+	text-align: center;
+}
+
+.currentPage a {
+	color: #bccbe7;
+	text-decoration: none;
+}
+
+.search_area {
+	text-align: center;
+}
+
+#search_button {
+	width: 15%;
+	margin-bottom: 20px;
+}
