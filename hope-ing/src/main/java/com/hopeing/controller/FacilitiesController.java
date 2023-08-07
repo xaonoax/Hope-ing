@@ -1,5 +1,6 @@
 package com.hopeing.controller;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,9 +30,61 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/hope-ing/facilities/*")
 @Slf4j
 public class FacilitiesController {
-	private static final int ITEMS_PER_PAGE = 20;
+	private static final int ITEMS_PER_PAGE = 15;
 	private static final String OPEN_API_URL = "url 주소 입력";
+	private static final String SERVICE_KEY = "인증키 입력";
+
+	@GetMapping(value = "/facilities_search", produces = "application/json; charset=utf-8")
+	public ModelAndView facilitiesSearch(
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(defaultValue = "1") int page)
+					throws IOException, ParseException {
+		List<FacilitiesVO> searchResults = searchFacilitiesByKeyword(searchKeyword, page);
+		
+		ModelAndView modelAndView = new ModelAndView("/hope-ing/facilities/facilities_search");
+		modelAndView.addObject("searchKeyword", searchKeyword);
+		modelAndView.addObject("searchResults", searchResults);
+		modelAndView.addObject("currentPage", page);
+		
+		int totalResults = searchResults.size();
+		int totalPages = (int) Math.ceil((double) totalResults / ITEMS_PER_PAGE);
+		modelAndView.addObject("totalPages", totalPages);
+		
+		return modelAndView;
+	}
 	
+	private List<FacilitiesVO> searchFacilitiesByKeyword(String searchKeyword, int page) throws IOException, ParseException {
+		List<FacilitiesVO> searchResults = new ArrayList<>();
+		
+		String encodedSearchKeyword = URLEncoder.encode(searchKeyword, "UTF-8");
+		int currentPage = 1;
+		boolean hasNextPage = true;
+		
+		while (hasNextPage) {
+			String apiUrl = OPEN_API_URL
+							+ "q=" + encodedSearchKeyword
+							+ "&page=" + currentPage
+							+ "&perPage=" + ITEMS_PER_PAGE
+							+ "&serviceKey=" + SERVICE_KEY
+							+ "&_type=json";
+			
+			List<FacilitiesVO> facilitiesData = getFacilitiesListFromOpenAPI(apiUrl);
+			
+			for (FacilitiesVO facilities : facilitiesData) {
+				if (facilities.get시설명().contains(searchKeyword)) {
+					searchResults.add(facilities);
+				}
+			}
+			hasNextPage = !facilitiesData.isEmpty();
+			currentPage++;
+		}
+		int startIndex = (page - 1) * ITEMS_PER_PAGE;
+		int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, searchResults.size());
+		
+		return searchResults.subList(startIndex, endIndex);
+	}
+
+
 	@GetMapping(value="/detail", produces="application/json; charset=utf-8")
 	public ModelAndView facilitiesDetail(@RequestParam("시설명") String facilitiesName) throws IOException, ParseException {
 		FacilitiesVO facilitiesData = getFacilitiesDataFromOpenAPI(facilitiesName);
@@ -47,12 +100,12 @@ public class FacilitiesController {
 		
 		while (true) {
 			String encodedFacilitiesName = URLEncoder.encode(facilitiesName, "UTF-8");
-			String apiUrl = OPEN_API_URL +
-					"q=" + encodedFacilitiesName +
-					"&page=" + currentPage +
-					"&perPage=" + ITEMS_PER_PAGE +
-					"&serviceKey=인증키 입력" +
-					"&_type=json";
+			String apiUrl = OPEN_API_URL
+							+ "q=" + encodedFacilitiesName
+							+ "&page=" + currentPage
+							+ "&perPage=" + ITEMS_PER_PAGE
+							+ "&serviceKey=" + SERVICE_KEY
+							+ "&_type=json";
 			
 			List<FacilitiesVO> facilitiesData = getFacilitiesListFromOpenAPI(apiUrl);
 			
@@ -60,7 +113,7 @@ public class FacilitiesController {
 				throw new IllegalArgumentException("시설명에 해당하는 데이터를 찾을 수 없습니다.");
 			}
 			
-			FacilitiesVO targetFacilities = findTargetFacility(facilitiesData, facilitiesName);
+			FacilitiesVO targetFacilities = findTargetFacilities(facilitiesData, facilitiesName);
 			
 			if (targetFacilities != null) {
 				return targetFacilities;
@@ -69,10 +122,10 @@ public class FacilitiesController {
 		}
 	}
 	
-	private FacilitiesVO findTargetFacility(List<FacilitiesVO> facilitiesData, String facilitiesName) {
-		for (FacilitiesVO facility : facilitiesData) {
-			if (facility.get시설명().equals(facilitiesName)) {
-				return facility;
+	private FacilitiesVO findTargetFacilities(List<FacilitiesVO> facilitiesData, String facilitiesName) {
+		for (FacilitiesVO facilities : facilitiesData) {
+			if (facilities.get시설명().equals(facilitiesName)) {
+				return facilities;
 			}
 		}
 		return null;
@@ -80,11 +133,11 @@ public class FacilitiesController {
 	
 	@GetMapping(value="/facilities_list", produces="application/json; charset=utf-8")
 	public ModelAndView facilictiesGET(@RequestParam(defaultValue = "1") int page) throws IOException, ParseException {
-		String apiUrl = OPEN_API_URL +
-			"page=" + page +
-			"&perPage=" + ITEMS_PER_PAGE +
-			"&serviceKey=인증키 입력" +
-			"&_type=json";
+		String apiUrl = OPEN_API_URL
+						+ "page=" + page
+						+ "&perPage=" + ITEMS_PER_PAGE
+						+ "&serviceKey=" + SERVICE_KEY
+						+ "&_type=json";
 		
 		List<FacilitiesVO> facilitiesList = getFacilitiesListFromOpenAPI(apiUrl);
 	
